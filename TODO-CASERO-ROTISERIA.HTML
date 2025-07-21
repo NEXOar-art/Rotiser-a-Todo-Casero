@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Todo Casero - Rotisería en Campana con los mejores sándwiches, hamburguesas, pizzas y pastas caseras. Abierto de Lun-Dom: 19:30-23:45">
+  <meta name="description" content="Todo Casero - Rotisería en Campana con los mejores sándwiches, pizzas y pastas caseras. Abierto de Lun-Dom: 20:00-23:45">
   <title>Todo Casero - Rotisería | Campana</title>
   <style>
     :root {
@@ -247,6 +248,12 @@
       white-space: nowrap;
     }
    
+    .product-stock {
+      font-size: 0.9rem;
+      color: #888;
+      margin-left: 1rem;
+    }
+   
     .product-image {
       width: 80px;
       height: 80px;
@@ -472,6 +479,14 @@
       justify-content: space-between;
     }
    
+    .customer-info input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+   
     .chat-widget {
       position: fixed;
       bottom: 80px;
@@ -611,7 +626,6 @@
       max-height: 150px;
       margin-top: 0.5rem;
       display: block;
-      border-radius: 4px;
     }
    
     .product-list {
@@ -655,6 +669,11 @@
       }
      
       .product-price {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+     
+      .product-stock {
         margin-left: 0;
         margin-top: 0.5rem;
       }
@@ -728,6 +747,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
+
 <header>
   <div class="logo">Todo Casero</div>
   <div class="tagline">Auténtica comida casera en Campana</div>
@@ -751,10 +771,12 @@
 
 <section class="section" id="menu">
   <h2 class="section-title">Nuestro Menú</h2>
+ 
   <div class="offer-banner" id="offerBanner">
     <h3>¡Ofertas Especiales!</h3>
     <p id="offerText"></p>
   </div>
+ 
   <div class="menu-section">
     <div id="categoriesContainer"></div>
   </div>
@@ -762,17 +784,20 @@
 
 <section class="section" id="pedidos">
   <h2 class="section-title">Cómo Hacer tu Pedido</h2>
+ 
   <div class="info-cards">
     <div class="info-card">
       <i class="fas fa-utensils"></i>
       <h3>Elige tu comida</h3>
-      <p>Selecciona entre nuestra variedad de sándwiches, hamburguesas, pizzas, pastas y más.</p>
+      <p>Selecciona entre nuestra variedad de sándwiches, pizzas, pastas y más.</p>
     </div>
+   
     <div class="info-card">
       <i class="fas fa-comment"></i>
       <h3>Haz tu pedido</h3>
       <p>Chatea con nuestra asistente María o usa WhatsApp al +54 348 9358998.</p>
     </div>
+   
     <div class="info-card">
       <i class="fas fa-store"></i>
       <h3>Recoge en local</h3>
@@ -783,17 +808,21 @@
 
 <section class="section" id="contacto">
   <h2 class="section-title">Contacto</h2>
+ 
   <div class="info-cards">
     <div class="info-card">
+TIPOS DE SÁNDWICHES
       <i class="fas fa-map-marker-alt"></i>
       <h3>Ubicación</h3>
       <p>Campana, Buenos Aires</p>
     </div>
+   
     <div class="info-card">
       <i class="fas fa-clock"></i>
       <h3>Horario</h3>
       <p>Lunes a Domingo<br>19:30 - 23:45</p>
     </div>
+   
     <div class="info-card">
       <i class="fab fa-whatsapp"></i>
       <h3>Teléfono</h3>
@@ -823,6 +852,7 @@
       <h3>Todo Casero</h3>
       <p>Auténtica comida casera preparada con los mejores ingredientes y mucho amor.</p>
     </div>
+   
     <div class="footer-section">
       <h3>Menú</h3>
       <ul>
@@ -832,15 +862,17 @@
         <li><a href="#menu">Hamburguesas</a></li>
       </ul>
     </div>
+   
     <div class="footer-section">
       <h3>Contacto</h3>
       <ul>
         <li><i class="fas fa-map-marker-alt"></i> Campana, BA</li>
         <li><i class="fas fa-phone"></i> +54 348 9358998</li>
-        <li><i class="fas fa-clock"></i> Lun-Dom: 19:30-23:45</li>
+        <li><i class="fas fa-clock"></i> Lun-Dom: 20:00-23:45</li>
       </ul>
     </div>
   </div>
+ 
   <div class="copyright">
     © 2025 Todo Casero - Todos los derechos reservados |
     <span id="adminLink" style="cursor:pointer; text-decoration:underline;">Acceso Administrador</span>
@@ -856,6 +888,11 @@
     <h3>Tu Carrito</h3>
     <div id="cartItems"></div>
     <div class="cart-total" id="cartTotal"></div>
+    <div class="customer-info">
+      <h4>Datos del Cliente</h4>
+      <input type="text" id="customerName" placeholder="Nombre" required>
+      <input type="tel" id="customerPhone" placeholder="Celular" required>
+    </div>
     <div class="payment-info">
       <h4>Métodos de Pago</h4>
       <div class="payment-method">
@@ -896,24 +933,33 @@
         <option value="Postres">Postres</option>
       </select>
     </div>
+   
     <div>
       <label for="productName">Nombre del Producto</label>
       <input type="text" id="productName" required placeholder="Ej: Sándwich de Bondiola">
     </div>
+   
     <div>
       <label for="productPrice">Precio (ARS)</label>
       <input type="number" id="productPrice" required placeholder="Ej: 9000">
     </div>
+   
+    <div>
+      <label for="productStock">Stock</label>
+      <input type="number" id="productStock" required placeholder="Ej: 10">
+    </div>
+   
     <div>
       <label for="productDescription">Descripción</label>
       <textarea id="productDescription" rows="3" placeholder="Descripción del producto"></textarea>
     </div>
+   
     <div>
       <label for="productImage">Imagen del Producto</label>
       <input type="file" id="productImage" accept="image/*">
       <img id="previewImage" class="image-preview" style="display:none;">
-      <button type="button" id="removeImage" style="display:none; margin-top: 0.5rem; background-color: #e74c3c;">Eliminar Imagen</button>
     </div>
+   
     <button type="submit">Agregar/Editar Producto</button>
     <button type="button" id="saveChanges" style="margin-top: 1rem;">Guardar Modificaciones</button>
   </form>
@@ -931,38 +977,38 @@
 
 <script>
   const defaultProducts = [
-    { id: 1, category: "Sándwiches", name: "Bondiola", price: 9000, description: "Delicioso sándwich de bondiola casera c/Fritas.", image: "BONDIOLA.jpeg" },
-    { id: 2, category: "Sándwiches", name: "Bondiola Especial", price: 10000, description: "Bondiola con extras especiales c/Fritas.", image: "BONDIOLA.jpeg" },
-    { id: 3, category: "Sándwiches", name: "Bondiola Premium", price: 11000, description: "Bondiola premium con ingredientes selectos c/Fritas.", image: "BONDIOLA.jpeg" },
-    { id: 4, category: "Sándwiches", name: "Milanesa", price: 9500, description: "Clásico sándwich de milanesa con lechuga y tomate c/Fritas.", image: "" },
-    { id: 5, category: "Sándwiches", name: "Milanesa Especial", price: 10500, description: "Milanesa con extras especiales c/Fritas.", image: "" },
-    { id: 6, category: "Sándwiches", name: "Milanesa Completa", price: 11500, description: "Milanesa completa con todos los complementos c/Fritas.", image: "" },
-    { id: 7, category: "Sándwiches", name: "Tucumano", price: 14000, description: "Sándwich tucumano tradicional c/Fritas Doble.", image: "" },
-    { id: 8, category: "Sándwiches", name: "Lomito Simple", price: 10000, description: "Lomito jugoso con tomate y lechuga c/Fritas.", image: "" },
-    { id: 9, category: "Sándwiches", name: "Lomito Especial", price: 10500, description: "Lomito con extras especiales c/Fritas.", image: "" },
-    { id: 10, category: "Sándwiches", name: "Lomito Premium", price: 11000, description: "Lomito premium con ingredientes selectos c/Fritas.", image: "" },
-    { id: 11, category: "Hamburguesas", name: "Hamburguesa Completa", price: 8500, description: "Con lechuga, tomate, queso y mayonesa c/Fritas.", image: "" },
-    { id: 12, category: "Hamburguesas", name: "Hamburguesa Vegetariana", price: 8500, description: "Hamburguesa vegetariana deliciosa c/Fritas.", image: "" },
-    { id: 13, category: "Hamburguesas", name: "Hamburguesa Doble", price: 10500, description: "Doble carne y queso c/Fritas.", image: "" },
-    { id: 14, category: "Hamburguesas", name: "Hamburguesa Zapping", price: 25000, description: "Hamburguesa especial Zapping c/Fritas Doble.", image: "" },
-    { id: 15, category: "Pizzas", name: "Muzzarella", price: 10000, description: "Pizza clásica con queso muzzarella, oregano, aceitunas.", image: "" },
-    { id: 16, category: "Pizzas", name: "Fugaza", price: 11000, description: "Pizza fugaza tradicional.", image: "" },
-    { id: 17, category: "Pizzas", name: "Napolitana", price: 11500, description: "Pizza napolitana con tomate, ajo y oregano.", image: "" },
-    { id: 18, category: "Pizzas", name: "Especial", price: 12000, description: "Pizza especial con jamon, morrones y aceitunas.", image: "" },
-    { id: 19, category: "Pizzas Individuales", name: "Muzzarella Individual", price: 5500, description: "Individual con queso muzzarella.", image: "" },
-    { id: 20, category: "Pizzas Individuales", name: "Fugaza Individual", price: 6000, description: "Individual fugaza tradicional.", image: "" },
-    { id: 21, category: "Pizzas Individuales", name: "Napolitana Individual", price: 6500, description: "Individual napolitana con tomate y ajo.", image: "" },
-    { id: 22, category: "Pizzas Individuales", name: "Especial Individual", price: 7000, description: "Individual especial con jamon y morrones.", image: "" },
-    { id: 23, category: "Pastas", name: "Tallarines con Bolognesa", price: 8500, description: "Pasta fresca con salsa bolognesa casera.", image: "" },
-    { id: 24, category: "Pastas", name: "Ñoquis con Bolognesa", price: 8500, description: "Ñoquis frescos con salsa bolognesa.", image: "" },
-    { id: 25, category: "Pastas", name: "Ravioles con Bolognesa", price: 9500, description: "Ravioles frescos con salsa bolognesa.", image: "" },
-    { id: 26, category: "Acompañamientos", name: "Porción de Fritas", price: 4500, description: "Porción grande de papas fritas.", image: "" },
-    { id: 27, category: "Acompañamientos", name: "Cono de Fritas", price: 3500, description: "Cono mediano de papas fritas.", image: "" },
-    { id: 28, category: "Empanadas", name: "Empanadas", price: 17000, description: "Empanadas de Carne caseras x 12 unidades.", image: "" },
-    { id: 29, category: "Empanadas", name: "Empanadas", price: 8500, description: "Empanadas de Carne caseras x 6 unidades.", image: "" },
-    { id: 30, category: "Postres", name: "Flan", price: 3500, description: "Con crema o mixto (Dulce de Leche y Crema).", image: "" },
-    { id: 31, category: "Postres", name: "Torta Helada", price: 4500, description: "Crema Americana con Dulce de Leche.", image: "" },
-    { id: 32, category: "Postres", name: "Panqueque", price: 4500, description: "Dulce de Leche, Chocolate y canela.", image: "" }
+    { id: 1, category: "Sándwiches", name: "Bondiola", price: 9000, description: "Delicioso sándwich de bondiola casera c/Fritas.", image: "IMG/bondiola.jpeg", stock: 4 },
+    { id: 2, category: "Sándwiches", name: "Bondiola Especial", price: 10000, description: "Bondiola con extras especiales c/Fritas.", image: "IMG/bondiola.jpeg", stock: 0 },
+    { id: 3, category: "Sándwiches", name: "Bondiola Premium", price: 11000, description: "Bondiola premium con ingredientes selectos c/Fritas.", image: "IMG/bondiola.jpeg", stock: 0 },
+    { id: 4, category: "Sándwiches", name: "Milanesa", price: 9500, description: "Clásico sándwich de milanesa con lechuga y tomate c/Fritas.", image: "IMG/milanesa.jpeg", stock: 0 },
+    { id: 5, category: "Sándwiches", name: "Milanesa Especial", price: 10500, description: "Milanesa con extras especiales c/Fritas.", image: "IMG/milanesa_especial.jpg", stock: 0 },
+    { id: 6, category: "Sándwiches", name: "Milanesa Completa", price: 11500, description: "Milanesa completa con todos los complementos c/Fritas.", image: "IMG/milanesa_completa.jpg", stock: 0 },
+    { id: 7, category: "Sándwiches", name: "Tucumano", price: 14000, description: "Sándwich tucumano tradicional c/Fritas Doble.", image: "IMG/tucumano.jpg", stock: 0 },
+    { id: 8, category: "Sándwiches", name: "Lomito Simple", price: 10000, description: "Lomito jugoso con tomate y lechuga c/Fritas.", image: "IMG/lomito_simple.jpg", stock: 0 },
+    { id: 9, category: "Sándwiches", name: "Lomito Especial", price: 10500, description: "Lomito con extras especiales c/Fritas.", image: "IMG/lomito_especial.jpg", stock: 0 },
+    { id: 10, category: "Sándwiches", name: "Lomito Premium", price: 11000, description: "Lomito premium con ingredientes selectos c/Fritas.", image: "IMG/lomito_premium.jpg", stock: 0 },
+    { id: 11, category: "Hamburguesas", name: "Hamburguesa Completa", price: 8500, description: "Con lechuga, tomate, queso y mayonesa c/Fritas.", image: "IMG/hamburguesa_completa.jpg", stock: 0 },
+    { id: 12, category: "Hamburguesas", name: "Hamburguesa Vegetariana", price: 8500, description: "Hamburguesa vegetariana deliciosa c/Fritas.", image: "IMG/hamburguesa_vegetariana.jpg", stock: 0 },
+    { id: 13, category: "Hamburguesas", name: "Hamburguesa Doble", price: 10500, description: "Doble carne y queso c/Fritas.", image: "IMG/hamburguesa_doble.jpg", stock: 0 },
+    { id: 14, category: "Hamburguesas", name: "Hamburguesa Zapping", price: 25000, description: "Hamburguesa especial Zapping c/Fritas Doble.", image: "IMG/hamburguesa_zapping.jpg", stock: 0 },
+    { id: 15, category: "Pizzas", name: "Muzzarella", price: 10000, description: "Pizza clásica con queso muzzarella, oregano, aceitunas.", image: "IMG/pizza_muzzarella.jpg", stock: 0 },
+    { id: 16, category: "Pizzas", name: "Fugaza", price: 11000, description: "Pizza fugaza tradicional.", image: "IMG/pizza_fugaza.jpg", stock: 0 },
+    { id: 17, category: "Pizzas", name: "Napolitana", price: 11500, description: "Pizza napolitana con tomate, ajo y oregano.", image: "IMG/pizza_napolitana.jpg", stock: 0 },
+    { id: 18, category: "Pizzas", name: "Especial", price: 12000, description: "Pizza especial con jamon, morrones y aceitunas.", image: "IMG/pizza_especial.jpg", stock: 0 },
+    { id: 19, category: "Pizzas Individuales", name: "Muzzarella Individual", price: 5500, description: "Individual con queso muzzarella.", image: "IMG/pizza_muzzarella_individual.jpg", stock: 0 },
+    { id: 20, category: "Pizzas Individuales", name: "Fugaza Individual", price: 6000, description: "Individual fugaza tradicional.", image: "IMG/pizza_fugaza_individual.jpg", stock: 0 },
+    { id: 21, category: "Pizzas Individuales", name: "Napolitana Individual", price: 6500, description: "Individual napolitana con tomate y ajo.", image: "IMG/pizza_napolitana_individual.jpg", stock: 0 },
+    { id: 22, category: "Pizzas Individuales", name: "Especial Individual", price: 7000, description: "Individual especial con jamon y morrones.", image: "IMG/pizza_especial_individual.jpg", stock: 0 },
+    { id: 23, category: "Pastas", name: "Tallarines con Bolognesa", price: 8500, description: "Pasta fresca con salsa bolognesa casera.", image: "IMG/tallarines_bolognesa.jpg", stock: 0 },
+    { id: 24, category: "Pastas", name: "Ñoquis con Bolognesa", price: 8500, description: "Ñoquis frescos con salsa bolognesa.", image: "IMG/noquis_bolognesa.jpg", stock: 0 },
+    { id: 25, category: "Pastas", name: "Ravioles con Bolognesa", price: 9500, description: "Ravioles frescos con salsa bolognesa.", image: "IMG/ravioles_bolognesa.jpg", stock: 0 },
+    { id: 26, category: "Acompañamientos", name: "Porción de Fritas", price: 4500, description: "Porción grande de papas fritas.", image: "IMG/porcion_fritas.jpg", stock: 0 },
+    { id: 27, category: "Acompañamientos", name: "Cono de Fritas", price: 3500, description: "Cono mediano de papas fritas.", image: "IMG/cono_fritas.jpg", stock: 0 },
+    { id: 28, category: "Empanadas", name: "Empanadas", price: 17000, description: "Empanadas de Carne caseras x 12 unidades.", image: "IMG/empanadas_12.jpg", stock: 0 },
+    { id: 29, category: "Empanadas", name: "Empanadas", price: 8500, description: "Empanadas de Carne caseras x 6 unidades.", image: "IMG/empanadas_6.jpg", stock: 0 },
+    { id: 30, category: "Postres", name: "Flan", price: 3500, description: "Con crema o mixto (Dulce de Leche y Crema).", image: "IMG/flan.jpg", stock: 0 },
+    { id: 31, category: "Postres", name: "Torta Helada", price: 4500, description: "Crema Americana con Dulce de Leche.", image: "IMG/torta_helada.jpg", stock: 0 },
+    { id: 32, category: "Postres", name: "Panqueque", price: 4500, description: "Dulce de Leche, Chocolate y canela.", image: "IMG/panqueque.jpg", stock: 0 }
   ];
 
   const defaultOffers = [
@@ -1038,6 +1084,7 @@
             <div class="product-description">${product.description}</div>
           </div>
           <div class="product-price">$${product.price.toLocaleString('es-AR')}</div>
+          <div class="product-stock">Stock: ${product.stock}</div>
           ${product.image ? `<img src="${product.image}" alt="${product.name}" class="product-image">` : ""}
           <button class="add-to-cart" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Añadir al Carrito</button>
         `;
@@ -1068,13 +1115,27 @@
   }
 
   function addToCart(id, name, price) {
+    const product = products.find(p => p.id === parseInt(id));
+    if (product.stock <= 0) {
+      alert("Lo siento, este producto está agotado.");
+      return;
+    }
     const existingItem = cart.find(item => item.id === id);
     if (existingItem) {
+      if (product.stock < existingItem.quantity + 1) {
+        alert("Lo siento, no hay suficiente stock para agregar más unidades de este producto.");
+        return;
+      }
       existingItem.quantity += 1;
     } else {
+      if (product.stock < 1) {
+        alert("Lo siento, este producto está agotado.");
+        return;
+      }
       cart.push({ id, name, price, quantity: 1 });
     }
     updateCartDisplay();
+    document.getElementById("cartModal").style.display = "flex";
   }
 
   function updateCartDisplay() {
@@ -1150,8 +1211,10 @@
     doc.save(`order_${new Date().toISOString().replace(/[:.]/g, '')}.pdf`);
   }
 
-  function generateWhatsAppMessage() {
-    let message = "🍔 *Pedido de Todo Casero* 🍔\n\n";
+  function generateWhatsAppMessage(customerName, customerPhone, lowStockProducts) {
+    let message = `🍔 *Pedido de Todo Casero* 🍔\n\n`;
+    message += `👤 *Cliente*: ${customerName}\n`;
+    message += `📞 *Celular*: ${customerPhone}\n\n`;
     cart.forEach(item => {
       message += `• ${item.quantity} x ${item.name} - $${(item.price * item.quantity).toLocaleString('es-AR')} 💸\n`;
     });
@@ -1162,6 +1225,19 @@
     if (payment === "Transferencia") {
       message += `\nAlias: Adri.roti\nTitular: Adriana Basilia Enrique`;
     }
+    if (lowStockProducts.length > 0) {
+      message += `\n\n🔒 *Para la rotisería*: Usar código !0608 para ver alertas de stock bajo`;
+    }
+    return encodeURIComponent(message);
+  }
+
+  function generateStockMessage(lowStockProducts) {
+    let message = `🔒 *Alerta de Stock Bajo* 🔒\n\n`;
+    message += `Código: !0608\n`;
+    message += `¡Atención! El stock de los siguientes productos ha llegado a 2 unidades:\n`;
+    lowStockProducts.forEach(product => {
+      message += `- ${product}: Quedan solo 2 unidades.\n`;
+    });
     return encodeURIComponent(message);
   }
 
@@ -1306,7 +1382,9 @@
         }
       } else if (lowerMessage.includes("sándwich") || lowerMessage.includes("sandwich")) {
         const sandwiches = products.filter(p => p.category === "Sándwiches");
-        response += "Tenemos deliciosos sándwiches como el de Bondiola ($9.000), Milanesa ($9.500) o Lomito ($10.000). ¿Cuál te tienta?";
+        response += "Tenemos deliciosos sándwiches como el de Bondiola";
+
+        "Hola ($9.000), Milanesa ($9.500) o Lomito ($10.000). ¿Cuál te tienta?";
       } else if (lowerMessage.includes("pizza")) {
         const pizzas = products.filter(p => p.category === "Pizzas" || p.category === "Pizzas Individuales");
         response += "Ofrecemos pizzas clásicas como la Muzzarella ($10.000) o individuales como la Muzzarella Individual ($5.500). 🍕 ¿Cuál preferís?";
@@ -1356,7 +1434,6 @@
     document.getElementById("adminPanel").style.display = "none";
     document.getElementById("productForm").reset();
     document.getElementById("previewImage").style.display = "none";
-    document.getElementById("removeImage").style.display = "none";
     editingProductId = null;
   }
 
@@ -1367,7 +1444,7 @@
       const div = document.createElement("div");
       div.className = "product-item";
       div.innerHTML = `
-        <span>${product.name} - $${product.price}</span>
+        <span>${product.name} - $${product.price} - Stock: ${product.stock}</span>
         <div>
           <button class="btn" onclick="editProduct(${product.id})">Editar</button>
           <button class="btn" style="background-color: #e74c3c;" onclick="deleteProduct(${product.id})">Borrar</button>
@@ -1383,14 +1460,11 @@
     document.getElementById("categorySelect").value = product.category;
     document.getElementById("productName").value = product.name;
     document.getElementById("productPrice").value = product.price;
+    document.getElementById("productStock").value = product.stock;
     document.getElementById("productDescription").value = product.description;
     if (product.image) {
       document.getElementById("previewImage").src = product.image;
       document.getElementById("previewImage").style.display = "block";
-      document.getElementById("removeImage").style.display = "block";
-    } else {
-      document.getElementById("previewImage").style.display = "none";
-      document.getElementById("removeImage").style.display = "none";
     }
   }
 
@@ -1418,15 +1492,45 @@
   });
 
   document.getElementById("sendOrder").addEventListener("click", () => {
+    const customerName = document.getElementById("customerName").value.trim();
+    const customerPhone = document.getElementById("customerPhone").value.trim();
+
     if (cart.length === 0) {
       alert("El carrito está vacío. Añadí productos antes de enviar el pedido.");
       return;
     }
-    generatePDF();
+
+    if (!customerName || !customerPhone) {
+      alert("Por favor, completá tus datos (nombre y celular).");
+      return;
+    }
+
+    let lowStockProducts = [];
+    cart.forEach(item => {
+      const product = products.find(p => p.id === parseInt(item.id));
+      product.stock -= item.quantity;
+      if (product.stock === 2) {
+        lowStockProducts.push(product.name);
+      }
+    });
+
     const phoneNumber = "+543489358998";
-    const whatsappMessage = generateWhatsAppMessage();
+    const whatsappMessage = generateWhatsAppMessage(customerName, customerPhone, lowStockProducts);
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${whatsappMessage}`;
     window.open(whatsappUrl, '_blank');
+
+    if (lowStockProducts.length > 0) {
+      const stockMessage = generateStockMessage(lowStockProducts);
+      const stockUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${stockMessage}`;
+      setTimeout(() => window.open(stockUrl, '_blank'), 500);
+    }
+
+    generatePDF();
+    cart = [];
+    updateCartDisplay();
+    renderCategories();
+    saveData();
+    closeCart();
   });
 
   document.getElementById("adminLink").addEventListener("click", function(e) {
@@ -1437,26 +1541,14 @@
   document.getElementById("productImage").addEventListener("change", function(e) {
     const file = e.target.files[0];
     if (file) {
-      if (file.size > 2 * 1024 * 1024) { // Limit to 2MB
-        alert("La imagen es demasiado grande. Por favor, selecciona una imagen de menos de 2MB.");
-        e.target.value = "";
-        return;
-      }
       const reader = new FileReader();
       reader.onload = function(ev) {
         const preview = document.getElementById("previewImage");
         preview.src = ev.target.result;
         preview.style.display = "block";
-        document.getElementById("removeImage").style.display = "block";
       };
       reader.readAsDataURL(file);
     }
-  });
-
-  document.getElementById("removeImage").addEventListener("click", function() {
-    document.getElementById("productImage").value = "";
-    document.getElementById("previewImage").style.display = "none";
-    document.getElementById("removeImage").style.display = "none";
   });
 
   document.getElementById("productForm").addEventListener("submit", function(e) {
@@ -1464,30 +1556,30 @@
    
     const name = document.getElementById("productName").value.trim();
     const price = parseInt(document.getElementById("productPrice").value);
+    const stock = parseInt(document.getElementById("productStock").value);
     const description = document.getElementById("productDescription").value.trim();
     const category = document.getElementById("categorySelect").value;
     const imageInput = document.getElementById("productImage");
-    const previewImage = document.getElementById("previewImage");
-    const image = imageInput.files.length > 0 ? previewImage.src : (editingProductId ? products.find(p => p.id === editingProductId).image : "");
+    const image = imageInput.files.length > 0 ? URL.createObjectURL(imageInput.files[0]) : "";
    
-    if (!name || isNaN(price)) {
+    if (!name || isNaN(price) || isNaN(stock)) {
       alert("Por favor completá todos los campos requeridos.");
       return;
     }
 
     if (editingProductId) {
-      products = products.map(p => p.id === editingProductId ? { ...p, category, name, price, description, image } : p);
+      products = products.map(p => p.id === editingProductId ? { ...p, category, name, price, stock, description, image } : p);
     } else {
       const id = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
-      products.push({ id, category, name, price, description, image });
+      products.push({ id, category, name, price, stock, description, image });
     }
    
     renderProductList();
     renderCategories();
     this.reset();
     document.getElementById("previewImage").style.display = "none";
-    document.getElementById("removeImage").style.display = "none";
     editingProductId = null;
+    saveData();
   });
 
   document.getElementById("saveChanges").addEventListener("click", function() {
@@ -1511,5 +1603,6 @@
     });
   });
 </script>
+
 </body>
 </html>
