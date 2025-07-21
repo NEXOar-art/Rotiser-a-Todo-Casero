@@ -801,7 +801,7 @@
     <div class="info-card">
       <i class="fas fa-store"></i>
       <h3>Recoge en local</h3>
-      <p>Retira tu pedido en nuestro local en Campana en el horario acordado.</p>
+      <p>Retira tu pedido en nuestro local en el horario acordado.</p>
     </div>
   </div>
 </section>
@@ -868,7 +868,7 @@ TIPOS DE SÁNDWICHES
       <ul>
         <li><i class="fas fa-map-marker-alt"></i> Campana, BA</li>
         <li><i class="fas fa-phone"></i> +54 348 9358998</li>
-        <li><i class="fas fa-clock"></i> Lun-Dom: 20:00-23:45</li>
+        <li><i class="fas fa-clock"></i> Lun-Dom: 19:30-23:45</li>
       </ul>
     </div>
   </div>
@@ -1007,13 +1007,14 @@ TIPOS DE SÁNDWICHES
     { id: 28, category: "Empanadas", name: "Empanadas", price: 17000, description: "Empanadas de Carne caseras x 12 unidades.", image: "IMG/empanadas_12.jpg", stock: 0 },
     { id: 29, category: "Empanadas", name: "Empanadas", price: 8500, description: "Empanadas de Carne caseras x 6 unidades.", image: "IMG/empanadas_6.jpg", stock: 0 },
     { id: 30, category: "Postres", name: "Flan", price: 3500, description: "Con crema o mixto (Dulce de Leche y Crema).", image: "IMG/flan.jpg", stock: 0 },
-    { id: 31, category: "Postres", name: "Torta Helada", price: 4500, description: "Crema Americana con Dulce de Leche.", image: "IMG/torta_helada.jpg", stock: 0 },
+    { id: 31, category: "Postres", name: "Torta Helada", price: 4500, description: "Crema Americana con Dulce de Leche.", image: "IMG/torta helada.jpeg", stock: 0 },
     { id: 32, category: "Postres", name: "Panqueque", price: 4500, description: "Dulce de Leche, Chocolate y canela.", image: "IMG/panqueque.jpg", stock: 0 }
   ];
 
   const defaultOffers = [
-    { id: 1, day: "Lunes", description: "Pastas 10% los Lunes", discount: 10 },
-    { id: 2, day: "Miércoles", description: "Sándwich de Bondiola 10% los Miércoles", discount: 10 }
+    { id: 1, day: "Lunes", description: "Pastas 10% off los Lunes", discount: 10 },
+    { id: 2, day: "Martes", description: "Hamburguesa Zapping 10% off los Martes", discount: 10 },
+    { id: 3, day: "Miércoles", description: "Sándwich de Bondiola 10% off los Miércoles", discount: 10 }
   ];
 
   let cart = [];
@@ -1180,7 +1181,7 @@ TIPOS DE SÁNDWICHES
     const doc = new jsPDF();
    
     doc.setFontSize(18);
-    doc.text("Factura Todo Casero", 20, 20);
+    doc.text("Orden Todo Casero", 20, 20);
     doc.setFontSize(12);
     doc.text(`Fecha: ${new Date().toLocaleString('es-AR')}`, 20, 30);
     doc.text("Dirección: Campana, Buenos Aires", 20, 40);
@@ -1367,7 +1368,7 @@ TIPOS DE SÁNDWICHES
       } else if (lowerMessage.includes("hola") || lowerMessage.includes("buenas")) {
         response += "Bienvenido/a a Todo Casero, una rotisería con corazón artesanal. 🍔 ¿En qué puedo ayudarte hoy?";
       } else if (lowerMessage.includes("horario") || lowerMessage.includes("hora")) {
-        response += "Estamos abiertos de Lunes a Domingo de 20:00 a 23:45. 🕗 ¿Querés hacer un pedido ahora?";
+        response += "Estamos abiertos de Lunes a Domingo de 19:30 a 23:45. 🕗 ¿Querés hacer un pedido ahora?";
       } else if (lowerMessage.includes("ubicación") || lowerMessage.includes("Campana")) {
         response += "Nos encontramos en Campana, Buenos Aires. 📍 ¿Te ayudo a planificar tu pedido?";
       } else if (lowerMessage.includes("menú") || lowerMessage.includes("menu") || lowerMessage.includes("carta")) {
@@ -1382,9 +1383,8 @@ TIPOS DE SÁNDWICHES
         }
       } else if (lowerMessage.includes("sándwich") || lowerMessage.includes("sandwich")) {
         const sandwiches = products.filter(p => p.category === "Sándwiches");
-        response += "Tenemos deliciosos sándwiches como el de Bondiola";
-
-        "Hola ($9.000), Milanesa ($9.500) o Lomito ($10.000). ¿Cuál te tienta?";
+        response += "Tenemos deliciosos sándwiches como el de Bondiola
+       ($9.000), Milanesa ($9.500), Lomito ($10.000), Hamburguesa Zapping($25.000). ¿Cuál te tienta?";
       } else if (lowerMessage.includes("pizza")) {
         const pizzas = products.filter(p => p.category === "Pizzas" || p.category === "Pizzas Individuales");
         response += "Ofrecemos pizzas clásicas como la Muzzarella ($10.000) o individuales como la Muzzarella Individual ($5.500). 🍕 ¿Cuál preferís?";
@@ -1410,7 +1410,7 @@ TIPOS DE SÁNDWICHES
       } else if (lowerMessage.includes("pedido") || lowerMessage.includes("cómo pedir")) {
         response += "Podés elegir tu comida desde el menú, añadirla al carrito y enviar el pedido por WhatsApp desde nuestra web. También podés decirme qué querés pedir y te ayudo a calcularlo. 😊 ¿Querés empezar un pedido?";
       } else {
-        response += "Entiendo, pero no estoy segura de lo que necesitas. 😔 ¿Podés darme más detalles o preguntarme por el menú, horarios o algo específico?";
+        response += "Entiendo, pero no estoy segura de lo que necesitas. 😔 ¿Podés darme más detalles o preguntarme por el menú, horarios o algo específico?, tambien puedes comunicarte por whatsapp al 3489358998";
       }
     }
    
