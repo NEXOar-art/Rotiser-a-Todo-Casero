@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Todo Casero - Rotisería en Campana con los mejores sándwiches, pizzas y pastas caseras. Abierto de Lun-Dom: 20:00-23:45">
+  <meta name="description" content="Todo Casero - Rotisería con los mejores sándwiches, hamburguesas, pizzas y pastas caseras. Abierto de Lun-Dom: 20:00-23:45">
   <title>Todo Casero - Rotisería | Campana</title>
   <style>
     :root {
@@ -248,6 +248,12 @@
       white-space: nowrap;
     }
    
+    .product-stock {
+      font-size: 0.9rem;
+      color: #888;
+      margin-left: 1rem;
+    }
+   
     .product-image {
       width: 80px;
       height: 80px;
@@ -473,6 +479,14 @@
       justify-content: space-between;
     }
    
+    .customer-info input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+   
     .chat-widget {
       position: fixed;
       bottom: 80px;
@@ -659,6 +673,11 @@
         margin-top: 0.5rem;
       }
      
+      .product-stock {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+     
       .product-image {
         margin-left: 0;
         margin-top: 1rem;
@@ -729,7 +748,6 @@
 </head>
 <body>
 
-
 <header>
   <div class="logo">Todo Casero</div>
   <div class="tagline">Auténtica comida casera en Campana</div>
@@ -742,7 +760,6 @@
   </nav>
 </header>
 
-
 <section class="hero" id="inicio">
   <div class="hero-content">
     <h1>Los sabores más caseros de Campana</h1>
@@ -751,7 +768,6 @@
     <a href="#" class="btn btn-whatsapp" onclick="toggleChat()">Chatear con María</a>
   </div>
 </section>
-
 
 <section class="section" id="menu">
   <h2 class="section-title">Nuestro Menú</h2>
@@ -765,7 +781,6 @@
     <div id="categoriesContainer"></div>
   </div>
 </section>
-
 
 <section class="section" id="pedidos">
   <h2 class="section-title">Cómo Hacer tu Pedido</h2>
@@ -786,11 +801,10 @@
     <div class="info-card">
       <i class="fas fa-store"></i>
       <h3>Recoge en local</h3>
-      <p>Retira tu pedido en nuestro local en Campana en el horario acordado.</p>
+      <p>Retira tu pedido en nuestro local en el horario acordado.</p>
     </div>
   </div>
 </section>
-
 
 <section class="section" id="contacto">
   <h2 class="section-title">Contacto</h2>
@@ -819,7 +833,6 @@
   </div>
 </section>
 
-
 <div id="chatWidget" class="chat-widget">
   <div class="chat-header">
     <span>Chat con María de Todo Casero</span>
@@ -831,7 +844,6 @@
     <button onclick="sendChatMessage()">Enviar</button>
   </div>
 </div>
-
 
 <footer>
   <div class="footer-content">
@@ -855,7 +867,7 @@
       <ul>
         <li><i class="fas fa-map-marker-alt"></i> Campana, BA</li>
         <li><i class="fas fa-phone"></i> +54 348 9358998</li>
-        <li><i class="fas fa-clock"></i> Lun-Dom: 20:00-23:45</li>
+        <li><i class="fas fa-clock"></i> Lun-Dom: 19:30-23:45</li>
       </ul>
     </div>
   </div>
@@ -866,17 +878,20 @@
   </div>
 </footer>
 
-
 <a href="#" class="whatsapp-float" onclick="toggleChat()">
   <i class="fas fa-comment"></i>
 </a>
-
 
 <div id="cartModal" class="cart-modal">
   <div class="cart-content">
     <h3>Tu Carrito</h3>
     <div id="cartItems"></div>
     <div class="cart-total" id="cartTotal"></div>
+    <div class="customer-info">
+      <h4>Datos del Cliente</h4>
+      <input type="text" id="customerName" placeholder="Nombre" required>
+      <input type="tel" id="customerPhone" placeholder="Celular" required>
+    </div>
     <div class="payment-info">
       <h4>Métodos de Pago</h4>
       <div class="payment-method">
@@ -899,7 +914,6 @@
   </div>
 </div>
 
-
 <div id="adminPanel" class="admin-panel">
   <button class="close-admin" onclick="closeAdmin()">×</button>
   <h3>Panel de Administración</h3>
@@ -915,7 +929,8 @@
         <option value="Hamburguesas">Hamburguesas</option>
         <option value="Acompañamientos">Acompañamientos</option>
         <option value="Empanadas">Empanadas</option>
-         <option value="Postres">Postres</option>
+        <option value="Postres">Postres</option>
+        <option value="Al Plato">Al Plato</option>
       </select>
     </div>
    
@@ -930,13 +945,26 @@
     </div>
    
     <div>
+      <label for="productStock">Stock</label>
+      <input type="number" id="productStock" required placeholder="Ej: 10">
+    </div>
+   
+    <div>
       <label for="productDescription">Descripción</label>
       <textarea id="productDescription" rows="3" placeholder="Descripción del producto"></textarea>
     </div>
    
     <div>
-      <label for="productImage">Imagen del Producto</label>
+      <label for="productImage">Subir Imagen del Producto</label>
       <input type="file" id="productImage" accept="image/*">
+    </div>
+   
+    <div>
+      <label for="productImageUrl">O ingrese URL de la Imagen</label>
+      <input type="url" id="productImageUrl" placeholder="Ej: https://example.com/image.jpg">
+    </div>
+   
+    <div>
       <img id="previewImage" class="image-preview" style="display:none;">
     </div>
    
@@ -945,7 +973,6 @@
   </form>
   <div class="product-list" id="productList"></div>
 </div>
-
 
 <div id="adminModal" class="modal">
   <div class="modal-content">
@@ -956,63 +983,62 @@
   </div>
 </div>
 
-
 <script>
   const defaultProducts = [
-    { id: 1, category: "Sándwiches", name: "Bondiola", price: 9000, description: "Delicioso sándwich de bondiola casera c/Fritas." },
-    { id: 2, category: "Sándwiches", name: "Bondiola Especial", price: 10000, description: "Bondiola con extras especiales c/Fritas." },
-    { id: 3, category: "Sándwiches", name: "Bondiola Premium", price: 11000, description: "Bondiola premium con ingredientes selectos c/Fritas." },
-    { id: 4, category: "Sándwiches", name: "Milanesa", price: 9500, description: "Clásico sándwich de milanesa con lechuga y tomate c/Fritas." },
-    { id: 5, category: "Sándwiches", name: "Milanesa Especial", price: 10500, description: "Milanesa con extras especiales c/Fritas." },
-    { id: 6, category: "Sándwiches", name: "Milanesa Completa", price: 11500, description: "Milanesa completa con todos los complementos c/Fritas." },
-    { id: 7, category: "Sándwiches", name: "Tucumano", price: 14000, description: "Sándwich tucumano tradicional c/Fritas Doble." },
-    { id: 8, category: "Sándwiches", name: "Lomito Simple", price: 10000, description: "Lomito jugoso con tomate y lechuga c/Fritas." },
-    { id: 9, category: "Sándwiches", name: "Lomito Especial", price: 10500, description: "Lomito con extras especiales c/Fritas." },
-    { id: 10, category: "Sándwiches", name: "Lomito Premium", price: 11000, description: "Lomito premium con ingredientes selectos c/Fritas." },
-    { id: 11, category: "Hamburguesas", name: "Hamburguesa Completa", price: 8500, description: "Con lechuga, tomate, queso y mayonesa c/Fritas." },
-    { id: 12, category: "Hamburguesas", name: "Hamburguesa Vegetariana", price: 8500, description: "Hamburguesa vegetariana deliciosa c/Fritas." },
-    { id: 13, category: "Hamburguesas", name: "Hamburguesa Doble", price: 10500, description: "Doble carne y queso c/Fritas." },
-    { id: 14, category: "Hamburguesas", name: "Hamburguesa Zapping", price: 25000, description: "Hamburguesa especial Zapping c/Fritas Doble." },
-    { id: 15, category: "Pizzas", name: "Muzzarella", price: 10000, description: "Pizza clásica con queso muzzarella,oregano, aceitunas." },
-    { id: 16, category: "Pizzas", name: "Fugaza", price: 11000, description: "Pizza fugaza tradicional." },
-    { id: 17, category: "Pizzas", name: "Napolitana", price: 11500, description: "Pizza napolitana con tomate, ajo y oregano." },
-    { id: 18, category: "Pizzas", name: "Especial", price: 12000, description: "Pizza especial con jamon, morrones y aceitunas." },
-    { id: 19, category: "Pizzas Individuales", name: "Muzzarella Individual", price: 5500, description: "Individual con queso muzzarella." },
-    { id: 20, category: "Pizzas Individuales", name: "Fugaza Individual", price: 6000, description: "Individual fugaza tradicional." },
-    { id: 21, category: "Pizzas Individuales", name: "Napolitana Individual", price: 6500, description: "Individual napolitana con tomate y ajo." },
-    { id: 22, category: "Pizzas Individuales", name: "Especial Individual", price: 7000, description: "Individual especial con jamon y morrones." },
-    { id: 23, category: "Pastas", name: "Tallarines con Bolognesa", price: 8500, description: "Pasta fresca con salsa bolognesa casera." },
-    { id: 24, category: "Pastas", name: "Ñoquis con Bolognesa", price: 8500, description: "Ñoquis frescos con salsa bolognesa." },
-    { id: 25, category: "Pastas", name: "Ravioles con Bolognesa", price: 9500, description: "Ravioles frescos con salsa bolognesa." },
-    { id: 26, category: "Acompañamientos", name: "Porción de Fritas", price: 4500, description: "Porción grande de papas fritas." },
-    { id: 27, category: "Acompañamientos", name: "Cono de Fritas", price: 3500, description: "Cono mediano de papas fritas." },
-    { id: 28, category: "Empanadas", name: "Empanadas", price: 17000, description: "Empanadas de Carne caseras x 12 unidades." },
-    { id: 29, category: "Empanadas", name: "Empanadas", price: 8500, description: "Empanadas de Carne caseras x 6 unidades." },
-    { id: 30, category: "Postres", name: "Flan", price: 3500, description: "Con crema o mixto(Dulce de Leche y Crema)." },
-    { id: 31, category: "Postres", name: "Torta Helada", price: 4500, description: "Crema Americana con Dulce de Leche." },
-    { id: 32, category: "Postres", name: "Panqueque", price: 4500, description: "Dulce de Leche, Chocolate y canela." }
+    { id: 1, category: "Sándwiches", name: "Bondiola", price: 9000, description: "Delicioso sándwich de bondiola casera c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiser-a-Todo-Casero/main/BONDIOLA.jpeg"
+, stock: 4 },
+    { id: 2, category: "Sándwiches", name: "Bondiola Especial", price: 10000, description: "Bondiola con extras especiales c/Fritas.", image: "https://images.unsplash.com/photo-1565299503-7e5fcdb7d58e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 3, category: "Sándwiches", name: "Bondiola Premium", price: 11000, description: "Bondiola premium con ingredientes selectos c/Fritas.", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 4, category: "Sándwiches", name: "Milanesa", price: 9500, description: "Clásico sándwich de milanesa con lechuga y tomate c/Fritas.", image: "https://images.unsplash.com/photo-1607013251379-e6eecfffe234?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 5, category: "Sándwiches", name: "Milanesa Especial", price: 10500, description: "Milanesa con extras especiales c/Fritas.", image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 6, category: "Sándwiches", name: "Milanesa Completa", price: 11500, description: "Milanesa completa con todos los complementos c/Fritas.", image: "https://images.unsplash.com/photo-1579751626657-72bc17010498?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 7, category: "Sándwiches", name: "Tucumano", price: 14000, description: "Sándwich tucumano tradicional c/Fritas Doble.", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 8, category: "Sándwiches", name: "Lomito Simple", price: 10000, description: "Lomito jugoso con tomate y lechuga c/Fritas.", image: "https://images.unsplash.com/photo-1565299503-7e5fcdb7d58e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 9, category: "Sándwiches", name: "Lomito Especial", price: 10500, description: "Lomito con extras especiales c/Fritas.", image: "https://images.unsplash.com/photo-1607013251379-e6eecfffe234?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 10, category: "Sándwiches", name: "Lomito Premium", price: 11000, description: "Lomito premium con ingredientes selectos c/Fritas.", image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 11, category: "Hamburguesas", name: "Hamburguesa Completa", price: 8500, description: "Con lechuga, tomate, queso y mayonesa c/Fritas.", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 12, category: "Hamburguesas", name: "Hamburguesa Vegetariana", price: 8500, description: "Hamburguesa vegetariana deliciosa c/Fritas.", image: "https://images.unsplash.com/photo-1594219001565-31856e373dca?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 13, category: "Hamburguesas", name: "Hamburguesa Doble", price: 10500, description: "Doble carne y queso c/Fritas.", image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 14, category: "Hamburguesas", name: "Hamburguesa Zapping", price: 25000, description: "Hamburguesa especial Zapping c/Fritas Doble.", image: "https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 15, category: "Pizzas", name: "Muzzarella", price: 10000, description: "Pizza clásica con queso muzzarella, oregano, aceitunas.", image: "https://images.unsplash.com/photo-1513106580091-1d82408b8cd6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 16, category: "Pizzas", name: "Fugaza", price: 11000, description: "Pizza fugaza tradicional.", image: "https://images.unsplash.com/photo-1604383898580-0f3b51d76a95?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 17, category: "Pizzas", name: "Napolitana", price: 11500, description: "Pizza napolitana con tomate, ajo y oregano.", image: "https://images.unsplash.com/photo-1593560708920-61dd98c36a39?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 18, category: "Pizzas", name: "Especial", price: 12000, description: "Pizza especial con jamon, morrones y aceitunas.", image: "https://images.unsplash.com/photo-1565299624946-baccd3051816?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 19, category: "Pizzas Individuales", name: "Muzzarella Individual", price: 5500, description: "Individual con queso muzzarella.", image: "https://images.unsplash.com/photo-1605477261677-455cbedde22c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 20, category: "Pizzas Individuales", name: "Fugaza Individual", price: 6000, description: "Individual fugaza tradicional.", image: "https://images.unsplash.com/photo-1604383898580-0f3b51d76a95?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 21, category: "Pizzas Individuales", name: "Napolitana Individual", price: 6500, description: "Individual napolitana con tomate y ajo.", image: "https://images.unsplash.com/photo-1593560708920-61dd98c36a39?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 22, category: "Pizzas Individuales", name: "Especial Individual", price: 7000, description: "Individual especial con jamon y morrones.", image: "https://images.unsplash.com/photo-1565299624946-baccd3051816?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 23, category: "Pastas", name: "Tallarines con Bolognesa", price: 8500, description: "Pasta fresca con salsa bolognesa casera.", image: "https://images.unsplash.com/photo-1608897013039-887f21d8c804?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 24, category: "Pastas", name: "Ñoquis con Bolognesa", price: 8500, description: "Ñoquis frescos con salsa bolognesa.", image: "https://images.unsplash.com/photo-1632778149848-d1e83ec03c34?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 25, category: "Pastas", name: "Ravioles con Bolognesa", price: 9500, description: "Ravioles frescos con salsa bolognesa.", image: "https://images.unsplash.com/photo-1603183138310-2b6b33a342e6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 26, category: "Acompañamientos", name: "Porción de Fritas", price: 4500, description: "Porción grande de papas fritas.", image: "https://images.unsplash.com/photo-1630384060421-2a5d7752d2ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 27, category: "Acompañamientos", name: "Cono de Fritas", price: 3500, description: "Cono mediano de papas fritas.", image: "https://images.unsplash.com/photo-1576107491407-5e9e3e42e300?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 28, category: "Empanadas", name: "Empanadas", price: 17000, description: "Empanadas de Carne caseras x 12 unidades.", image: "https://images.unsplash.com/photo-1608507940435-c4a37d0d5411?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 29, category: "Empanadas", name: "Empanadas", price: 8500, description: "Empanadas de Carne caseras x 6 unidades.", image: "https://images.unsplash.com/photo-1608507940435-c4a37d0d5411?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 30, category: "Postres", name: "Flan", price: 3500, description: "Con crema o mixto (Dulce de Leche y Crema).", image: "https://images.unsplash.com/photo-1599999518758-3f7d0e8c6a3a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 31, category: "Postres", name: "Torta Helada", price: 4500, description: "Crema Americana con Dulce de Leche.", image: "https://images.unsplash.com/photo-1578985545060-699c680dd0f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 32, category: "Postres", name: "Panqueque", price: 4500, description: "Dulce de Leche, Chocolate y canela.", image: "https://images.unsplash.com/photo-1562706329-5864714d5e84?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 0 },
+    { id: 33, category: "Al Plato", name: "Milanesa con Puré", price: 9500, description: "Milanesa acompañada de puré de papas.", image: "https://images.unsplash.com/photo-1613844237701-8c0e7b9e4b7e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 10 },
+    { id: 34, category: "Al Plato", name: "Milanesa a Caballo", price: 10000, description: "Milanesa con dos huevos fritos encima.", image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 10 },
+    { id: 35, category: "Al Plato", name: "Milanesa Napolitana", price: 10500, description: "Milanesa con salsa de tomate, jamón y queso.", image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", stock: 10 }
   ];
-
 
   const defaultOffers = [
-    { id: 1, day: "Lunes", description: "Pastas 10% los Lunes", discount: 10 },
-    { id: 2, day: "Miércoles", description: "Sándwich de Bondiola 10% los Miércoles", discount: 10 }
+    { id: 1, day: "Lunes", description: "Pastas 10% off los Lunes", discount: 10 },
+    { id: 2, day: "Martes", description: "Hamburguesa Zapping 10% off los Martes", discount: 10 },
+    { id: 3, day: "Miércoles", description: "Sándwich de Bondiola 10% off los Miércoles", discount: 10 }
   ];
-
 
   let cart = [];
   let products = JSON.parse(localStorage.getItem("products")) || defaultProducts;
   let offers = JSON.parse(localStorage.getItem("offers")) || defaultOffers;
   let editingProductId = null;
-  let editingOfferId = null;
   let userName = null;
-
 
   function saveData() {
     localStorage.setItem("products", JSON.stringify(products));
     localStorage.setItem("offers", JSON.stringify(offers));
   }
-
 
   function checkAdminPassword() {
     const pass = document.getElementById("adminPassword").value;
@@ -1027,14 +1053,11 @@
     document.getElementById("adminPassword").value = "";
   }
 
-
   function renderCategories() {
     const container = document.getElementById("categoriesContainer");
     container.innerHTML = "";
 
-
     const categories = [...new Set(products.map(p => p.category))];
-
 
     categories.forEach(category => {
       const div = document.createElement("div");
@@ -1051,7 +1074,6 @@
       const content = div.querySelector(".products");
       const arrow = div.querySelector(".category-arrow");
 
-
       header.addEventListener("click", () => {
         const isOpen = content.style.display === "block";
         document.querySelectorAll(".products").forEach(p => {
@@ -1064,7 +1086,6 @@
         }
       });
 
-
       const filteredProducts = products.filter(p => p.category === category);
      
       filteredProducts.forEach(product => {
@@ -1073,26 +1094,24 @@
         productDiv.innerHTML = `
           <div class="product-info">
             <div class="product-name">${product.name}</div>
-            <div class="product-description">${product.description}</div>
+            <div Jaeger-LeCoultreclass="product-description">${product.description}</div>
           </div>
           <div class="product-price">$${product.price.toLocaleString('es-AR')}</div>
-          ${product.image ? `<img src="${product.image}" alt="${product.name}" class="product-image">` : ""}
+          <div class="product-stock">Stock: ${product.stock}</div>
+          ${product.image ? `<img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">` : ""}
           <button class="add-to-cart" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Añadir al Carrito</button>
         `;
         content.appendChild(productDiv);
       });
 
-
       container.appendChild(div);
     });
-
 
     const firstCategory = container.querySelector(".category");
     if (firstCategory) {
       firstCategory.querySelector(".products").style.display = "block";
       firstCategory.querySelector(".category-header").classList.add("active");
     }
-
 
     document.querySelectorAll(".add-to-cart").forEach(button => {
       button.addEventListener("click", () => {
@@ -1103,23 +1122,34 @@
       });
     });
 
-
     const today = new Date().toLocaleString('es-AR', { weekday: 'long' });
     const todayOffer = offers.find(offer => offer.day === today);
     document.getElementById('offerText').textContent = todayOffer ? todayOffer.description : '¡Consulta nuestras ofertas semanales!';
   }
 
-
   function addToCart(id, name, price) {
+    const product = products.find(p => p.id === parseInt(id));
+    if (product.stock <= 0) {
+      alert("Lo siento, este producto está agotado.");
+      return;
+    }
     const existingItem = cart.find(item => item.id === id);
     if (existingItem) {
+      if (product.stock < existingItem.quantity + 1) {
+        alert("Lo siento, no hay suficiente stock para agregar más unidades de este producto.");
+        return;
+      }
       existingItem.quantity += 1;
     } else {
+      if (product.stock < 1) {
+        alert("Lo siento, este producto está agotado.");
+        return;
+      }
       cart.push({ id, name, price, quantity: 1 });
     }
     updateCartDisplay();
+    document.getElementById("cartModal").style.display = "flex";
   }
-
 
   function updateCartDisplay() {
     const cartItems = document.getElementById("cartItems");
@@ -1128,7 +1158,6 @@
    
     cartItems.innerHTML = "";
     let total = 0;
-
 
     cart.forEach(item => {
       const itemTotal = item.price * item.quantity;
@@ -1143,11 +1172,9 @@
       cartItems.appendChild(div);
     });
 
-
     cartTotal.textContent = `Total: $${total.toLocaleString('es-AR')}`;
     cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
   }
-
 
   function removeFromCart(id) {
     const itemIndex = cart.findIndex(item => item.id === id);
@@ -1161,19 +1188,20 @@
     }
   }
 
-
   function generatePDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
    
     doc.setFontSize(18);
-    doc.text("Factura Todo Casero", 20, 20);
+    doc.text("Orden Todo Casero", 20, 20);
     doc.setFontSize(12);
     doc.text(`Fecha: ${new Date().toLocaleString('es-AR')}`, 20, 30);
-    doc.text("Dirección: Campana, Buenos Aires", 20, 40);
-    doc.text("Teléfono: +543489358998", 20, 50);
+    doc.text(`Cliente: ${document.getElementById("customerName").value.trim()}`, 20, 40);
+    doc.text(`Celular: ${document.getElementById("customerPhone").value.trim()}`, 20, 50);
+    doc.text("Dirección: Campana, Buenos Aires", 20, 60);
+    doc.text("Teléfono: +543489358998", 20, 70);
    
-    let y = 70;
+    let y = 90;
     doc.text("Producto | Cantidad | Precio Unitario | Total", 20, y);
     y += 10;
    
@@ -1198,9 +1226,10 @@
     doc.save(`order_${new Date().toISOString().replace(/[:.]/g, '')}.pdf`);
   }
 
-
-  function generateWhatsAppMessage() {
-    let message = "🍔 *Pedido de Todo Casero* 🍔\n\n";
+  function generateWhatsAppMessage(customerName, customerPhone, lowStockProducts) {
+    let message = `🍔 *Pedido de Todo Casero* 🍔\n\n`;
+    message += `👤 *Cliente*: ${customerName}\n`;
+    message += `📞 *Celular*: ${customerPhone}\n\n`;
     cart.forEach(item => {
       message += `• ${item.quantity} x ${item.name} - $${(item.price * item.quantity).toLocaleString('es-AR')} 💸\n`;
     });
@@ -1211,9 +1240,21 @@
     if (payment === "Transferencia") {
       message += `\nAlias: Adri.roti\nTitular: Adriana Basilia Enrique`;
     }
+    if (lowStockProducts.length > 0) {
+      message += `\n\n🔒 *Para la rotisería*: Usar código !0608 para ver alertas de stock bajo`;
+    }
     return encodeURIComponent(message);
   }
 
+  function generateStockMessage(lowStockProducts) {
+    let message = `🔒 *Alerta de Stock Bajo* 🔒\n\n`;
+    message += `Código: !0608\n`;
+    message += `¡Atención! El stock de los siguientes productos ha llegado a 2 unidades:\n`;
+    lowStockProducts.forEach(product => {
+      message += `- ${product}: Quedan solo 2 unidades.\n`;
+    });
+    return encodeURIComponent(message);
+  }
 
   function toggleChat() {
     const chatWidget = document.getElementById("chatWidget");
@@ -1227,12 +1268,10 @@
     }
   }
 
-
   function sendChatMessage() {
     const input = document.getElementById("chatInput");
     const message = input.value.trim();
     if (!message) return;
-
 
     const chatBody = document.getElementById("chatBody");
     const userMessage = document.createElement("div");
@@ -1240,38 +1279,33 @@
     userMessage.textContent = message;
     chatBody.appendChild(userMessage);
 
-
     const lowerMessage = message.toLowerCase();
-
 
     const nameMatch = message.match(/mi nombre es (\w+)/i);
     if (nameMatch) {
       userName = nameMatch[1].charAt(0).toUpperCase() + nameMatch[1].slice(1);
     }
 
-
     const greeting = userName ? `¡Hola ${userName}!` : "¡Hola!";
-    const closing = "¿Querés agregar algo mas? 😊";
+    const closing = "¿Quieres agregar algo más? 😊";
     const paymentInfo = "Aceptamos efectivo al retirar 💵 o transferencia bancaria 🏦 (Alias: Adri.roti, Titular: Adriana Basilia Enrique).";
-
 
     let response = `${greeting} Gracias por elegir Todo Casero. `;
 
-
-    if (lowerMessage.includes("resumen pdf") || lowerMessage.includes("generar pdf")) {
+    if (lowerMessage.includes("generar pdf") || lowerMessage.includes("resumen pdf")) {
       if (cart.length > 0) {
         generatePDF();
-        response += "¡Listo! He generado el resumen de tu pedido en PDF. 📄 ¿Querés confirmar el pedido por WhatsApp o añadir algo más?";
+        response += "¡Listo! He generado el resumen de tu pedido en PDF. 📄 ¿Quieres confirmar el pedido por WhatsApp o agregar algo más?";
       } else {
-        response += "Tu carrito está vacío. 😔 Por favor, añadí algunos productos antes de generar un resumen.";
+        response += "Tu carrito está vacío. 😔 Por favor agrega productos antes de generar un resumen.";
       }
     } else if (lowerMessage.includes("cancelar pedido")) {
       if (cart.length > 0) {
         cart = [];
         updateCartDisplay();
-        response += "¡Pedido cancelado! 😊 ¿Querés empezar un nuevo pedido?";
+        response += "¡Pedido cancelado! 😊 ¿Quieres empezar un nuevo pedido?";
       } else {
-        response += "No hay ningún pedido para cancelar. 😔 ¿Querés armar uno nuevo?";
+        response += "No hay pedido para cancelar. 😔 ¿Quieres hacer un nuevo pedido?";
       }
     } else {
       const orderRegex = /(\d+)\s*(?:x\s*)?([^\d\s][^,]*?)(?=\s*(?:y|,|$))/gi;
@@ -1282,22 +1316,22 @@
         let unmatchedItems = [];
         let today = new Date().toLocaleString('es-AR', { weekday: 'long' });
         let todayOffer = offers.find(offer => offer.day === today);
-       
+
         for (const match of orderMatches) {
           const quantity = parseInt(match[1]);
           const productName = match[2].trim();
           const product = products.find(p => p.name.toLowerCase() === productName.toLowerCase() || p.name.toLowerCase().includes(productName.toLowerCase()));
-         
+
           if (product && product.price) {
             let price = product.price;
             let discountApplied = false;
-           
+
             if (todayOffer && todayOffer.description.toLowerCase().includes(product.name.toLowerCase())) {
               const discount = todayOffer.discount / 100;
               price = Math.round(price * (1 - discount));
               discountApplied = true;
             }
-           
+
             const itemTotal = price * quantity;
             total += itemTotal;
             orderDetails.push({
@@ -1312,7 +1346,6 @@
           }
         }
 
-
         if (orderDetails.length > 0) {
           response += "¡Perfecto! Aquí está el detalle de tu pedido:\n";
           orderDetails.forEach(item => {
@@ -1320,15 +1353,15 @@
             if (item.discountApplied) {
               response += ` (con ${todayOffer.discount}% de descuento)`;
             }
-            response += `\n`;
+            response += '\n';
           });
           response += `\n💰 *Total*: $${total.toLocaleString('es-AR')}\n`;
-          response += `${paymentInfo} ¿Querés confirmar este pedido por WhatsApp o añadir algo más?`;
-         
+          response += `${paymentInfo} ¿Quieres confirmar este pedido por WhatsApp o agregar algo más?`;
+
           if (unmatchedItems.length > 0) {
-            response += `\n⚠️ No pude identificar: ${unmatchedItems.join(', ')}. Por favor, verificá los nombres en el menú (ej: 'Sándwich de Bondiola', 'Muzzarella').`;
+            response += `\n⚠️ No pude encontrar: ${unmatchedItems.join(', ')}. Por favor verifica los nombres en el menú (ejemplo: 'Sándwich de Bondiola', 'Muzzarella').`;
           }
-         
+
           orderDetails.forEach(item => {
             const existingItem = cart.find(cartItem => cartItem.id === products.find(p => p.name === item.name).id);
             if (existingItem) {
@@ -1344,82 +1377,79 @@
           });
           updateCartDisplay();
         } else {
-          response += "No pude identificar los productos en tu pedido. 😔 Por favor, asegurate de escribir los nombres como aparecen en el menú de Todo Casero (ej: 'Sándwich de Bondiola', 'Muzzarella'). ¿Podés intentarlo de nuevo?";
+          response += "No pude identificar los productos en tu pedido. 😔 Por favor escribe los nombres como aparecen en el menú de Todo Casero (ejemplo, 'Sándwich de Bondiola', 'Muzzarella'). ¿Puedes intentarlo de nuevo?";
         }
       } else if (lowerMessage.includes("hola") || lowerMessage.includes("buenas")) {
-        response += "Bienvenido/a a Todo Casero, una rotisería con corazón artesanal. 🍔 ¿En qué puedo ayudarte hoy?";
+        response += "¡Bienvenido a Todo Casero, una rotisería con corazón casero! 🍔 ¿Cómo puedo ayudarte hoy?";
       } else if (lowerMessage.includes("horario") || lowerMessage.includes("hora")) {
-        response += "Estamos abiertos de Lunes a Domingo de 20:00 a 23:45. 🕗 ¿Querés hacer un pedido ahora?";
-      } else if (lowerMessage.includes("ubicación") || lowerMessage.includes("Campana")) {
-        response += "Nos encontramos en Campana, Buenos Aires. 📍 ¿Te ayudo a planificar tu pedido?";
-      } else if (lowerMessage.includes("menú") || lowerMessage.includes("menu") || lowerMessage.includes("carta")) {
-        response += "Nuestro menú incluye sándwiches, pizzas, pastas, hamburguesas, lomitos, bondiola y acompañamientos como papas fritas. 😋 Podés verlo en la sección 'Menú' o preguntarme por algo específico.";
-      } else if (lowerMessage.includes("precio") || lowerMessage.includes("cuanto cuesta")) {
-        const productName = lowerMessage.replace(/precio de|cuanto cuesta|el precio de/gi, "").trim();
+        response += "Estamos abiertos de lunes a domingo de 19:30 a 23:45. 🕗 ¿Quieres hacer un pedido ahora?";
+      } else if (lowerMessage.includes("ubicación") || lowerMessage.includes("campana")) {
+        response += "Estamos en Campana, Buenos Aires. 📍 ¿Puedo ayudarte a armar tu pedido?";
+      } else if (lowerMessage.includes("menú") || lowerMessage.includes("carta")) {
+        response += "Nuestro menú incluye sándwiches, pizzas, pastas, hamburguesas, lomitos, bondiolas y acompañamientos como fritas. 😋 Puedes ver la sección 'Menú' o preguntarme por algo específico.";
+      } else if (lowerMessage.includes("precio") || lowerMessage.includes("cuánto cuesta")) {
+        const productName = lowerMessage.replace(/precio de|cuánto cuesta|el precio de/gi, "").trim();
         const product = products.find(p => p.name.toLowerCase().includes(productName));
         if (product) {
-          response += `El ${product.name} cuesta $${product.price.toLocaleString('es-AR')}. ${product.description} ¿Querés añadirlo al carrito?`;
+          response += `El precio de ${product.name} es $${product.price.toLocaleString('es-AR')}. ${product.description} ¿Quieres agregarlo al carrito?`;
         } else {
-          response += "No encontré ese producto. 😔 ¿Podrías especificar más o revisar nuestro menú en la sección 'Menú'?";
+          response += "No encontré ese producto. 😔 ¿Puedes darme más detalles o revisar nuestro menú en la sección 'Menú'?";
         }
-      } else if (lowerMessage.includes("sándwich") || lowerMessage.includes("sandwich")) {
+      } else if (lowerMessage.includes("sándwich") || lowerMessage.includes("sandwiches")) {
         const sandwiches = products.filter(p => p.category === "Sándwiches");
-        response += "Tenemos deliciosos sándwiches como el de Bondiola ($9.000), Milanesa ($9.500) o Lomito ($10.000). ¿Cuál te tienta?";
+        response += "Tenemos sándwiches deliciosos como Bondiola ($9,000), Milanesa ($9,500), Lomito ($10,000), y Zapping Burger ($25,000). ¿Cuál te tienta?";
       } else if (lowerMessage.includes("pizza")) {
         const pizzas = products.filter(p => p.category === "Pizzas" || p.category === "Pizzas Individuales");
-        response += "Ofrecemos pizzas clásicas como la Muzzarella ($10.000) o individuales como la Muzzarella Individual ($5.500). 🍕 ¿Cuál preferís?";
+        response += "Ofrecemos pizzas clásicas como Muzzarella ($10,000) y pizzas individuales como Muzzarella Individual ($5,500). 🍕 ¿Cuál prefieres?";
       } else if (lowerMessage.includes("pasta")) {
         const pastas = products.filter(p => p.category === "Pastas");
-        response += "Nuestras pastas caseras incluyen Tallarines con Bolognesa ($8.500). 🍝 ¿Te apetece?";
+        response += "Nuestras pastas caseras incluyen Tallarines con Bolognesa ($8,500). 🍝 ¿Te interesa?";
       } else if (lowerMessage.includes("hamburguesa")) {
         const burgers = products.filter(p => p.category === "Hamburguesas");
-        response += "Tenemos hamburguesas como la Completa ($8.500). 🍔 ¿Querés probarla?";
+        response += "Tenemos hamburguesas como la Completa ($8,500). 🍔 ¿Quieres probarla?";
       } else if (lowerMessage.includes("acompañamiento") || lowerMessage.includes("fritas")) {
         const sides = products.filter(p => p.category === "Acompañamientos");
-        response += "Ofrecemos acompañamientos como Porción de Fritas ($4.500) o Cono de Fritas ($3.500). 🍟 ¿Querés añadir alguno?";
+        response += "Ofrecemos acompañamientos como Porción de Fritas ($4,500) o Cono de Fritas ($3,500). 🍟 ¿Quieres agregar alguno?";
       } else if (lowerMessage.includes("oferta") || lowerMessage.includes("promoción")) {
         const today = new Date().toLocaleString('es-AR', { weekday: 'long' });
         const todayOffer = offers.find(offer => offer.day === today);
         if (todayOffer) {
-          response += `¡Hoy ${today} tenemos una oferta especial! ${todayOffer.description}. ¿Querés aprovecharla?`;
+          response += `¡Hoy ${today} tenemos una oferta especial! ${todayOffer.description}. ¿Quieres aprovecharla?`;
         } else {
-          response += "No tenemos ofertas para hoy, pero podés consultar nuestras promociones semanales en el menú. 😊 ¿Algo más en lo que pueda ayudarte?";
+          response += "No tenemos ofertas para hoy, pero puedes consultar nuestras promociones semanales en el menú. 😊 ¿En qué más puedo ayudarte?";
         }
       } else if (lowerMessage.includes("pago") || lowerMessage.includes("método de pago")) {
-        response += `${paymentInfo} ¿Cómo preferís pagar?`;
+        response += `${paymentInfo} ¿Cómo prefieres pagar?`;
       } else if (lowerMessage.includes("pedido") || lowerMessage.includes("cómo pedir")) {
-        response += "Podés elegir tu comida desde el menú, añadirla al carrito y enviar el pedido por WhatsApp desde nuestra web. También podés decirme qué querés pedir y te ayudo a calcularlo. 😊 ¿Querés empezar un pedido?";
+        response += "Puedes elegir tus platos desde el menú, agregarlos al carrito y enviar el pedido por WhatsApp desde nuestro sitio. También puedes decirme qué quieres pedir y te ayudo a armarlo. 😊 ¿Quieres empezar un pedido?";
       } else {
-        response += "Entiendo, pero no estoy segura de lo que necesitas. 😔 ¿Podés darme más detalles o preguntarme por el menú, horarios o algo específico?";
+        response += "Entiendo, pero no estoy segura de qué necesitas. 😔 ¿Puedes darme más detalles o preguntarme sobre el menú, horarios o algo específico? También puedes contactarnos por WhatsApp al +54 348 9358998.";
       }
     }
-   
+
     response += ` ${closing}`;
-   
+
     const botMessage = document.createElement("div");
     botMessage.className = "chat-message bot";
     botMessage.textContent = response;
     chatBody.appendChild(botMessage);
 
-
     input.value = "";
     chatBody.scrollTop = chatBody.scrollHeight;
   }
-
 
   function openAdmin() {
     document.getElementById("adminPanel").style.display = "block";
     renderProductList();
   }
 
-
   function closeAdmin() {
     document.getElementById("adminPanel").style.display = "none";
     document.getElementById("productForm").reset();
     document.getElementById("previewImage").style.display = "none";
+    document.getElementById("productImageUrl").value = "";
     editingProductId = null;
   }
-
 
   function renderProductList() {
     const productList = document.getElementById("productList");
@@ -1428,16 +1458,15 @@
       const div = document.createElement("div");
       div.className = "product-item";
       div.innerHTML = `
-        <span>${product.name} - $${product.price}</span>
+        <span>${product.name} - $${product.price} - Stock: ${product.stock}</span>
         <div>
           <button class="btn" onclick="editProduct(${product.id})">Editar</button>
-          <button class="btn" style="background-color: #e74c3c;" onclick="deleteProduct(${product.id})">Borrar</button>
+          <button class="btn" style="background-color: #e74c3c;" onclick="deleteProduct(${product.id})">Eliminar</button>
         </div>
       `;
       productList.appendChild(div);
     });
   }
-
 
   function editProduct(id) {
     editingProductId = id;
@@ -1445,13 +1474,14 @@
     document.getElementById("categorySelect").value = product.category;
     document.getElementById("productName").value = product.name;
     document.getElementById("productPrice").value = product.price;
+    document.getElementById("productStock").value = product.stock;
     document.getElementById("productDescription").value = product.description;
+    document.getElementById("productImageUrl").value = product.image || "";
     if (product.image) {
       document.getElementById("previewImage").src = product.image;
       document.getElementById("previewImage").style.display = "block";
     }
   }
-
 
   function deleteProduct(id) {
     if (confirm("¿Confirmar eliminación?")) {
@@ -1462,42 +1492,66 @@
     }
   }
 
-
   document.getElementById("viewCart").addEventListener("click", (e) => {
     e.preventDefault();
     document.getElementById("cartModal").style.display = "flex";
     updateCartDisplay();
   });
 
-
   function closeCart() {
     document.getElementById("cartModal").style.display = "none";
   }
-
 
   document.getElementById("cartTransferencia").addEventListener("change", function() {
     document.getElementById("cartTransferenciaInfo").style.display = this.checked ? "block" : "none";
   });
 
-
   document.getElementById("sendOrder").addEventListener("click", () => {
+    const customerName = document.getElementById("customerName").value.trim();
+    const customerPhone = document.getElementById("customerPhone").value.trim();
+
     if (cart.length === 0) {
-      alert("El carrito está vacío. Añadí productos antes de enviar el pedido.");
+      alert("El carrito está vacío. Por favor agrega productos antes de enviar el pedido.");
       return;
     }
-    generatePDF();
+
+    if (!customerName || !customerPhone) {
+      alert("Por favor completa tus datos (nombre y celular).");
+      return;
+    }
+
+    let lowStockProducts = [];
+    cart.forEach(item => {
+      const product = products.find(p => p.id === parseInt(item.id));
+      product.stock -= item.quantity;
+      if (product.stock === 2) {
+        lowStockProducts.push(product.name);
+      }
+    });
+
     const phoneNumber = "+543489358998";
-    const whatsappMessage = generateWhatsAppMessage();
+    const whatsappMessage = generateWhatsAppMessage(customerName, customerPhone, lowStockProducts);
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${whatsappMessage}`;
     window.open(whatsappUrl, '_blank');
-  });
 
+    if (lowStockProducts.length > 0) {
+      const stockMessage = generateStockMessage(lowStockProducts);
+      const stockUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${stockMessage}`;
+      setTimeout(() => window.open(stockUrl, '_blank'), 500);
+    }
+
+    generatePDF();
+    cart = [];
+    updateCartDisplay();
+    renderCategories();
+    saveData();
+    closeCart();
+  });
 
   document.getElementById("adminLink").addEventListener("click", function(e) {
     e.preventDefault();
     document.getElementById("adminModal").style.display = "flex";
   });
-
 
   document.getElementById("productImage").addEventListener("change", function(e) {
     const file = e.target.files[0];
@@ -1507,58 +1561,68 @@
         const preview = document.getElementById("previewImage");
         preview.src = ev.target.result;
         preview.style.display = "block";
+        document.getElementById("productImageUrl").value = ""; // Clear URL input
       };
       reader.readAsDataURL(file);
     }
   });
 
+  document.getElementById("productImageUrl").addEventListener("input", function(e) {
+    const url = e.target.value.trim();
+    if (url) {
+      const preview = document.getElementById("previewImage");
+      preview.src = url;
+      preview.style.display = "block";
+      document.getElementById("productImage").value = ""; // Clear file input
+    }
+  });
 
   document.getElementById("productForm").addEventListener("submit", function(e) {
     e.preventDefault();
-   
+
     const name = document.getElementById("productName").value.trim();
     const price = parseInt(document.getElementById("productPrice").value);
+    const stock = parseInt(document.getElementById("productStock").value);
     const description = document.getElementById("productDescription").value.trim();
     const category = document.getElementById("categorySelect").value;
     const imageInput = document.getElementById("productImage");
-    const image = imageInput.files.length > 0 ? URL.createObjectURL(imageInput.files[0]) : "";
-   
-    if (!name || isNaN(price)) {
-      alert("Por favor completá todos los campos requeridos.");
+    const imageUrl = document.getElementById("productImageUrl").value.trim();
+    const image = imageUrl || (imageInput.files.length > 0 ? URL.createObjectURL(imageInput.files[0]) : "");
+
+    if (!name || isNaN(price) || isNaN(stock)) {
+      alert("Por favor completa todos los campos requeridos.");
       return;
     }
 
-
     if (editingProductId) {
-      products = products.map(p => p.id === editingProductId ? { ...p, category, name, price, description, image } : p);
+      products = products.map(p => p.id === editingProductId ? { ...p, category, name, price, stock, description, image } : p);
     } else {
       const id = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
-      products.push({ id, category, name, price, description, image });
+      products.push({ id, category, name, price, stock, description, image });
     }
-   
+
     renderProductList();
     renderCategories();
     this.reset();
     document.getElementById("previewImage").style.display = "none";
+    document.getElementById("productImageUrl").value = "";
     editingProductId = null;
+    saveData();
   });
-
 
   document.getElementById("saveChanges").addEventListener("click", function() {
     saveData();
-    alert("Modificaciones guardadas correctamente!");
+    alert("¡Cambios guardados exitosamente!");
   });
-
 
   document.addEventListener("DOMContentLoaded", function() {
     renderCategories();
-   
+
     document.getElementById("cartModal").addEventListener("click", function(e) {
       if (e.target === this) {
         closeCart();
       }
     });
-
 
     document.getElementById("adminModal").addEventListener("click", function(e) {
       if (e.target === this) {
@@ -1567,7 +1631,6 @@
     });
   });
 </script>
-
 
 </body>
 </html>
