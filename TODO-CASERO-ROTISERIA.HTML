@@ -61,7 +61,7 @@
       display: flex;
       justify-content: center;
       gap: 1.5rem;
-      margin-top: 1rem;
+      margin dilated: 1rem;
       flex-wrap: wrap;
     }
    
@@ -391,8 +391,8 @@
    
     .whatsapp-float {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
+      bottom: 20px;
+      right: 20px;
       background-color: var(--accent-color);
       color: white;
       width: 60px;
@@ -489,8 +489,8 @@
    
     .chat-widget {
       position: fixed;
-      bottom: 80px;
-      right: 2rem;
+      bottom: 90px;
+      right: 20px;
       width: 300px;
       background-color: white;
       border-radius: 8px;
@@ -690,8 +690,8 @@
      
       .chat-widget {
         width: 90%;
-        bottom: 70px;
-        right: 1rem;
+        bottom: 90px;
+        right: 10px;
       }
     }
    
@@ -765,7 +765,7 @@
     <h1>Los sabores más caseros de Campana</h1>
     <p>Delicias recién hechas todos los días de 19:30 a 23:45</p>
     <a href="#menu" class="btn">Ver Menú</a>
-    <a href="#" class="btn btn-whatsapp" onclick="toggleChat()">Chatear con María</a>
+    <a href="https://api.whatsapp.com/send?phone=+543489358998&text=Hola%20Todo%20Casero!!!" class="btn btn-whatsapp">Chatear con María</a>
   </div>
 </section>
 
@@ -795,7 +795,7 @@
     <div class="info-card">
       <i class="fas fa-comment"></i>
       <h3>Haz tu pedido</h3>
-      <p>Chatea con nuestra asistente María o usa WhatsApp al +54 348 9358998.</p>
+      <p>Chatea con nuestra asistente María por WhatsApp al +54 348 9358998.</p>
     </div>
    
     <div class="info-card">
@@ -826,8 +826,8 @@
       <i class="fab fa-whatsapp"></i>
       <h3>Teléfono</h3>
       <p>+54 348 9358998</p>
-      <a href="#" class="btn btn-whatsapp" style="margin-top: 1rem;" onclick="toggleChat()">
-        <i class="fab fa-whatsapp"></i> Chatea con María
+      <a href="https://api.whatsapp.com/send?phone=+543489358998&text=Hola%20Todo%20Casero!!!" class="btn btn-whatsapp" style="margin-top: 1rem;">
+        <i class="fab fa-whatsapp"></i> Chatear con María
       </a>
     </div>
   </div>
@@ -878,8 +878,8 @@
   </div>
 </footer>
 
-<a href="#" class="whatsapp-float" onclick="toggleChat()">
-  <i class="fas fa-comment"></i>
+<a href="https://api.whatsapp.com/send?phone=+543489358998&text=Hola%20Todo%20Casero!!!" class="whatsapp-float">
+  <i class="fab fa-whatsapp"></i>
 </a>
 
 <div id="cartModal" class="cart-modal">
@@ -985,8 +985,7 @@
 
 <script>
   const defaultProducts = [
-    { id: 1, category: "Sándwiches", name: "Bondiola", price: 9000, description: "Delicioso sándwich de bondiola casera c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/BONDIOLA.jpeg"
-, stock: 4 },
+    { id: 1, category: "Sándwiches", name: "Bondiola", price: 9000, description: "Delicioso sándwich de bondiola casera c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/BONDIOLA.jpeg", stock: 4 },
     { id: 2, category: "Sándwiches", name: "Bondiola Especial", price: 10000, description: "Bondiola con extras especiales c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/BONDIOLA.jpeg", stock: 0 },
     { id: 3, category: "Sándwiches", name: "Bondiola Premium", price: 11000, description: "Bondiola premium con ingredientes selectos c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/BONDIOLA.jpeg", stock: 0 },
     { id: 4, category: "Sándwiches", name: "Milanesa", price: 9500, description: "Clásico sándwich de milanesa con lechuga y tomate c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/milanesa.jpeg", stock: 0 },
@@ -999,7 +998,7 @@
     { id: 11, category: "Hamburguesas", name: "Hamburguesa Completa", price: 8500, description: "Con lechuga, tomate, queso y mayonesa c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa completa.jpeg", stock: 0 },
     { id: 12, category: "Hamburguesas", name: "Hamburguesa Vegetariana", price: 8500, description: "Hamburguesa vegetariana deliciosa c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa vegetariana.jpeg", stock: 0 },
     { id: 13, category: "Hamburguesas", name: "Hamburguesa Doble", price: 10500, description: "Doble carne y queso c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa doble.jpeg", stock: 0 },
-    { id: 14, category: "Hamburguesas", name: "Hamburguesa Zapping", price: 25000, description: "Hamburguesa especial Zapping c/Fritas Doble.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/hamburguesa zapping.jpeg", stock: 0 },
+    { id: 14, category: "Hamburguesas", name: "Hamburguesa Zapping", price: 25000, description: "Hamburguesa especial Zapping c/Fritas Doble.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa zapping.jpeg", stock: 0 },
     { id: 15, category: "Pizzas", name: "Muzzarella", price: 10000, description: "Pizza clásica con queso muzzarella, oregano, aceitunas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/muzzarella.jpeg", stock: 0 },
     { id: 16, category: "Pizzas", name: "Fugaza", price: 11000, description: "Pizza fugaza tradicional.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/fugaza.jpeg", stock: 0 },
     { id: 17, category: "Pizzas", name: "Napolitana", price: 11500, description: "Pizza napolitana con tomate, ajo y oregano.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/napolitana.jpeg", stock: 0 },
@@ -1008,7 +1007,7 @@
     { id: 20, category: "Pizzas Individuales", name: "Fugaza Individual", price: 6000, description: "Individual fugaza tradicional.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/muzzarella individual.jpeg", stock: 0 },
     { id: 21, category: "Pizzas Individuales", name: "Napolitana Individual", price: 6500, description: "Individual napolitana con tomate y ajo.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/individual napolitana.jpeg", stock: 0 },
     { id: 22, category: "Pizzas Individuales", name: "Especial Individual", price: 7000, description: "Individual especial con jamon y morrones.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/logo.jpeg", stock: 0 },
-    { id: 23, category: "Pastas", name: "Tallarines con Bolognesa", price: 8500, description: "Pasta fresca con salsa bolognesa casera.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/Tallarines con bolognesa.jpeg", stock: 0 },
+    { id: 23, category: "Pastas", name: "Tallarines con Bolognesa", price: 8500, description: "Pasta fresca con salsa bolognesa casera.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/tallarines.jpeg", stock: 0 },
     { id: 24, category: "Pastas", name: "Ñoquis con Bolognesa", price: 8500, description: "Ñoquis frescos con salsa bolognesa.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/ñoquis con bolognesa.jpeg", stock: 0 },
     { id: 25, category: "Pastas", name: "Ravioles con Bolognesa", price: 9500, description: "Ravioles frescos con salsa bolognesa.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/ravioles con bolognesa.jpeg", stock: 0 },
     { id: 26, category: "Acompañamientos", name: "Porción de Fritas", price: 4500, description: "Porción grande de papas fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/porcion de fritas.jpeg", stock: 0 },
@@ -1094,7 +1093,7 @@
         productDiv.innerHTML = `
           <div class="product-info">
             <div class="product-name">${product.name}</div>
-            <div Jaeger-LeCoultreclass="product-description">${product.description}</div>
+            <div class="product-description">${product.description}</div>
           </div>
           <div class="product-price">$${product.price.toLocaleString('es-AR')}</div>
           <div class="product-stock">Stock: ${product.stock}</div>
@@ -1421,7 +1420,7 @@
       } else if (lowerMessage.includes("pago") || lowerMessage.includes("método de pago")) {
         response += `${paymentInfo} ¿Cómo prefieres pagar?`;
       } else if (lowerMessage.includes("pedido") || lowerMessage.includes("cómo pedir")) {
-        response += "Puedes elegir tus platos desde el menú, agregarlos al carrito y enviar el pedido por WhatsApp desde nuestro sitio. También puedes decirme qué quieres pedir y te ayudo a armarlo. 😊 ¿Quieres empezar un pedido?";
+        response += "Puedes elegir tus platos desde el menú, agregarlos al carrito y enviar el pedido por WhatsApp desde nuestro sitio. También puedes contactarme por WhatsApp al +54 348 9358998 para armar tu pedido. 😊 ¿Quieres empezar un pedido?";
       } else {
         response += "Entiendo, pero no estoy segura de qué necesitas. 😔 ¿Puedes darme más detalles o preguntarme sobre el menú, horarios o algo específico? También puedes contactarnos por WhatsApp al +54 348 9358998.";
       }
@@ -1561,7 +1560,7 @@
         const preview = document.getElementById("previewImage");
         preview.src = ev.target.result;
         preview.style.display = "block";
-        document.getElementById("productImageUrl").value = ""; // Clear URL input
+        document.getElementById("productImageUrl").value = "";
       };
       reader.readAsDataURL(file);
     }
@@ -1573,7 +1572,7 @@
       const preview = document.getElementById("previewImage");
       preview.src = url;
       preview.style.display = "block";
-      document.getElementById("productImage").value = ""; // Clear file input
+      document.getElementById("productImage").value = "";
     }
   });
 
