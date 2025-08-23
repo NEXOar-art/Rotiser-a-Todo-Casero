@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Todo Casero - Rotisería con los mejores sándwiches, hamburguesas, pizzas y pastas caseras. Abierto de Lun-Dom: 19:30-23:45">
   <title>Todo Casero - Rotisería | Campana</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
       --primary-color: #e67e22;
@@ -248,12 +249,6 @@
       white-space: nowrap;
     }
    
-    .product-stock {
-      font-size: 0.9rem;
-      color: #888;
-      margin-left: 1rem;
-    }
-   
     .product-image {
       width: 80px;
       height: 80px;
@@ -275,6 +270,37 @@
    
     .add-to-cart:hover {
       background-color: #e67e22;
+    }
+   
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: 1rem;
+    }
+   
+    .quantity-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+   
+    .quantity-btn:hover {
+      background-color: #d35400;
+    }
+   
+    .quantity-display {
+      min-width: 30px;
+      text-align: center;
+      font-weight: bold;
     }
    
     .offer-banner {
@@ -673,11 +699,6 @@
         margin-top: 0.5rem;
       }
      
-      .product-stock {
-        margin-left: 0;
-        margin-top: 0.5rem;
-      }
-     
       .product-image {
         margin-left: 0;
         margin-top: 1rem;
@@ -741,6 +762,18 @@
     .modal button {
       margin-top: 1rem;
     }
+
+    .animate-text {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideIn 1s ease-out forwards;
+    }
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -776,6 +809,33 @@
     <h3>¡Ofertas Especiales!</h3>
     <p id="offerText"></p>
   </div>
+
+  <!-- Combos Section -->
+  <section id="combos" class="mb-12">
+    <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">🍔🍕Combos Deliciosos para 2 a 6 personas🍔🍕</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Combo 1 -->
+      <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 text-center">
+        <h3 class="text-xl font-bold text-gray-800 mb-2">🍔 Combo Hamburguesa Zapping con Fritas + Pizza Especial</h3>
+        <p class="text-gray-600 mb-4 animate-text" style="animation-delay: 0.2s;">35.500 pesos</p>
+      </div>
+      <!-- Combo 2 -->
+      <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 text-center">
+        <h3 class="text-xl font-bold text-gray-800 mb-2">🍔 Combo de 2 Hamburguesas</h3>
+        <p class="text-gray-600 mb-4 animate-text" style="animation-delay: 0.4s;">16.000 pesos</p>
+      </div>
+      <!-- Combo 3 -->
+      <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 text-center">
+        <h3 class="text-xl font-bold text-gray-800 mb-2">🍕 Combo Pizza Muzzarella + 2 Hamburguesas Completas</h3>
+        <p class="text-gray-600 mb-4 animate-text" style="animation-delay: 0.6s;">25.500 pesos</p>
+      </div>
+      <!-- Combo 4 -->
+      <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow duration-300 text-center">
+        <h3 class="text-xl font-bold text-gray-800 mb-2">🍟 Combo Pizza Especial + Porción de Fritas</h3>
+        <p class="text-gray-600 mb-4 animate-text" style="animation-delay: 0.8s;">15.000 pesos</p>
+      </div>
+    </div>
+  </section>
  
   <div class="menu-section">
     <div id="categoriesContainer"></div>
@@ -945,11 +1005,6 @@
     </div>
    
     <div>
-      <label for="productStock">Stock</label>
-      <input type="number" id="productStock" required placeholder="Ej: 10">
-    </div>
-   
-    <div>
       <label for="productDescription">Descripción</label>
       <textarea id="productDescription" rows="3" placeholder="Descripción del producto"></textarea>
     </div>
@@ -985,41 +1040,41 @@
 
 <script>
   const defaultProducts = [
-    { id: 1, category: "Sándwiches", name: "Bondiola", price: 9000, description: "Delicioso sándwich de bondiola casera c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/BONDIOLA.jpeg", stock: 4 },
-    { id: 2, category: "Sándwiches", name: "Bondiola Especial", price: 10000, description: "Bondiola con extras especiales c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/BONDIOLA.jpeg", stock: 0 },
-    { id: 3, category: "Sándwiches", name: "Bondiola Premium", price: 11000, description: "Bondiola premium con ingredientes selectos c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/BONDIOLA.jpeg", stock: 0 },
-    { id: 4, category: "Sándwiches", name: "Milanesa", price: 9500, description: "Clásico sándwich de milanesa con lechuga y tomate c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/milanesa.jpeg", stock: 0 },
-    { id: 5, category: "Sándwiches", name: "Milanesa Especial", price: 10500, description: "Milanesa con extras especiales c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/milanesa premium.jpeg", stock: 0 },
-    { id: 6, category: "Sándwiches", name: "Milanesa Completa", price: 11500, description: "Milanesa completa con todos los complementos c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/milanesa premium.jpeg", stock: 0 },
-    { id: 7, category: "Sándwiches", name: "Tucumano", price: 14000, description: "Sándwich tucumano tradicional c/Fritas Doble.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/tucumano.jpeg", stock: 0 },
+    { id: 1, category: "Sándwiches", name: "Bondiola", price: 9000, description: "Delicioso sándwich de bondiola casera c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/BONDIOLA.jpeg", stock: 1000},
+    { id: 2, category: "Sándwiches", name: "Bondiola Especial", price: 10000, description: "Bondiola con extras especiales c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/BONDIOLA.jpeg", stock: 1000 },
+    { id: 3, category: "Sándwiches", name: "Bondiola Premium", price: 11000, description: "Bondiola premium con ingredientes selectos c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/BONDIOLA.jpeg", stock: 1000},
+    { id: 4, category: "Sándwiches", name: "Milanesa", price: 9500, description: "Clásico sándwich de milanesa con lechuga y tomate c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/milanesa.jpeg", stock: 1000 },
+    { id: 5, category: "Sándwiches", name: "Milanesa Especial", price: 10500, description: "Milanesa con extras especiales c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/milanesa premium.jpeg", stock: 1000 },
+    { id: 6, category: "Sándwiches", name: "Milanesa Completa", price: 11500, description: "Milanesa completa con todos los complementos c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/milanesa premium.jpeg", stock: 1000 },
+    { id: 7, category: "Sándwiches", name: "Tucumano", price: 14500, description: "Sándwich tucumano tradicional c/Fritas Doble.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/tucumano.jpeg", stock: 1000 },
     { id: 8, category: "Sándwiches", name: "Lomito Simple", price: 10000, description: "Lomito jugoso con tomate y lechuga c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/lomito premium.jpeg", stock: 0 },
     { id: 9, category: "Sándwiches", name: "Lomito Especial", price: 10500, description: "Lomito con extras especiales c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/lomito premium.jpeg", stock: 0 },
     { id: 10, category: "Sándwiches", name: "Lomito Premium", price: 11000, description: "Lomito premium con ingredientes selectos c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/lomito premium.jpeg", stock: 0 },
-    { id: 11, category: "Hamburguesas", name: "Hamburguesa Completa", price: 8500, description: "Con lechuga, tomate, queso y mayonesa c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa completa.jpeg", stock: 0 },
-    { id: 12, category: "Hamburguesas", name: "Hamburguesa Vegetariana", price: 8500, description: "Hamburguesa vegetariana deliciosa c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa vegetariana.jpeg", stock: 0 },
-    { id: 13, category: "Hamburguesas", name: "Hamburguesa Doble", price: 10500, description: "Doble carne y queso c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa doble.jpeg", stock: 0 },
-    { id: 14, category: "Hamburguesas", name: "Hamburguesa Zapping", price: 25000, description: "Hamburguesa especial Zapping c/Fritas Doble.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa zapping.jpeg", stock: 0 },
-    { id: 15, category: "Pizzas", name: "Muzzarella", price: 10000, description: "Pizza clásica con queso muzzarella, oregano, aceitunas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/muzzarella.jpeg", stock: 0 },
-    { id: 16, category: "Pizzas", name: "Fugaza", price: 11000, description: "Pizza fugaza tradicional.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/fugaza.jpeg", stock: 0 },
-    { id: 17, category: "Pizzas", name: "Napolitana", price: 11500, description: "Pizza napolitana con tomate, ajo y oregano.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/napolitana.jpeg", stock: 0 },
-    { id: 18, category: "Pizzas", name: "Especial", price: 12000, description: "Pizza especial con jamon, morrones y aceitunas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/especial.jpeg", stock: 0 },
-    { id: 19, category: "Pizzas Individuales", name: "Muzzarella Individual", price: 5500, description: "Individual con queso muzzarella.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/muzzarella individual.jpeg", stock: 0 },
-    { id: 20, category: "Pizzas Individuales", name: "Fugaza Individual", price: 6000, description: "Individual fugaza tradicional.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/muzzarella individual.jpeg", stock: 0 },
-    { id: 21, category: "Pizzas Individuales", name: "Napolitana Individual", price: 6500, description: "Individual napolitana con tomate y ajo.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/individual napolitana.jpeg", stock: 0 },
-    { id: 22, category: "Pizzas Individuales", name: "Especial Individual", price: 7000, description: "Individual especial con jamon y morrones.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/logo.jpeg", stock: 0 },
-    { id: 23, category: "Pastas", name: "Tallarines con Bolognesa", price: 8500, description: "Pasta fresca con salsa bolognesa casera.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/tallarines.jpeg", stock: 0 },
+    { id: 11, category: "Hamburguesas", name: "Hamburguesa Completa", price: 8500, description: "Con lechuga, tomate, queso y mayonesa c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa completa.jpeg", stock: 10000 },
+    { id: 12, category: "Hamburguesas", name: "Hamburguesa Vegetariana", price: 8500, description: "Hamburguesa vegetariana deliciosa c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa vegetariana.jpeg", stock: 10000 },
+    { id: 13, category: "Hamburguesas", name: "Hamburguesa Doble", price: 10500, description: "Doble carne y queso c/Fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa doble.jpeg", stock: 10000 },
+    { id: 14, category: "Hamburguesas", name: "Hamburguesa Zapping", price: 25000, description: "Hamburguesa especial Zapping c/Fritas Doble.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/hamburguesa zapping.jpeg", stock: 10000 },
+    { id: 15, category: "Pizzas", name: "Muzzarella", price: 11000, description: "Pizza clásica con queso muzzarella, oregano, aceitunas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/muzzarella.jpeg", stock: 1000 },
+    { id: 16, category: "Pizzas", name: "Fugaza", price: 12000, description: "Pizza fugaza tradicional.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/fugaza.jpeg", stock: 1000 },
+    { id: 17, category: "Pizzas", name: "Napolitana", price: 12500, description: "Pizza napolitana con tomate, ajo y oregano.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/napolitana.jpeg", stock: 1000 },
+    { id: 18, category: "Pizzas", name: "Especial", price: 13000, description: "Pizza especial con jamon, morrones y aceitunas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/especial.jpeg", stock: 1000 },
+    { id: 19, category: "Pizzas Individuales", name: "Muzzarella Individual", price: 6000, description: "Individual con queso muzzarella.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/muzzarella individual.jpeg", stock: 1000 },
+    { id: 20, category: "Pizzas Individuales", name: "Fugaza Individual", price: 6500, description: "Individual fugaza tradicional.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/muzzarella individual.jpeg", stock: 1000 },
+    { id: 21, category: "Pizzas Individuales", name: "Napolitana Individual", price: 7000, description: "Individual napolitana con tomate y ajo.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/individual napolitana.jpeg", stock: 1000 },
+    { id: 22, category: "Pizzas Individuales", name: "Especial Individual", price: 7500, description: "Individual especial con jamon y morrones.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/logo.jpeg", stock: 1000 },
+    { id: 23, category: "Pastas", name: "Tallarines con Bolognesa", price: 8500, description: "Pasta fresca con salsa bolognesa casera.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/tallarines.jpeg", stock: 1 },
     { id: 24, category: "Pastas", name: "Ñoquis con Bolognesa", price: 8500, description: "Ñoquis frescos con salsa bolognesa.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/ñoquis con bolognesa.jpeg", stock: 0 },
-    { id: 25, category: "Pastas", name: "Ravioles con Bolognesa", price: 9500, description: "Ravioles frescos con salsa bolognesa.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/ravioles con bolognesa.jpeg", stock: 0 },
-    { id: 26, category: "Acompañamientos", name: "Porción de Fritas", price: 4500, description: "Porción grande de papas fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/porcion de fritas.jpeg", stock: 0 },
-    { id: 27, category: "Acompañamientos", name: "Cono de Fritas", price: 3500, description: "Cono mediano de papas fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/cono de fritas.jpeg", stock: 0 },
+    { id: 25, category: "Pastas", name: "Ravioles con Bolognesa", price: 9500, description: "Ravioles frescos con salsa bolognesa.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/ravioles con bolognesa.jpeg", stock: 10000 },
+    { id: 26, category: "Acompañamientos", name: "Porción de Fritas", price: 4500, description: "Porción grande de papas fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/porcion de fritas.jpeg", stock: 10000 },
+    { id: 27, category: "Acompañamientos", name: "Cono de Fritas", price: 3500, description: "Cono mediano de papas fritas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/cono de fritas.jpeg", stock: 10000 },
     { id: 28, category: "Empanadas", name: "Empanadas", price: 17000, description: "Empanadas de Carne caseras x 12 unidades.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/empanadas.jpeg", stock: 0 },
     { id: 29, category: "Empanadas", name: "Empanadas", price: 8500, description: "Empanadas de Carne caseras x 6 unidades.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/empanadas.jpeg", stock: 0 },
-    { id: 30, category: "Postres", name: "Flan", price: 3500, description: "Con crema o mixto (Dulce de Leche y Crema).", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/flan.jpeg", stock: 0 },
-    { id: 31, category: "Postres", name: "Torta Helada", price: 4500, description: "Crema Americana con Dulce de Leche.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/torta helada.jpeg", stock: 0 },
+    { id: 30, category: "Postres", name: "Flan", price: 3500, description: "Con crema o mixto (Dulce de Leche y Crema).", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/flan.jpeg", stock: 10000 },
+    { id: 31, category: "Postres", name: "Torta Helada", price: 4500, description: "Crema Americana con Dulce de Leche.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/torta helada.jpeg", stock: 0},
     { id: 32, category: "Postres", name: "Panqueque", price: 4500, description: "Dulce de Leche, Chocolate y canela.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/logo.jpeg", stock: 0 },
-    { id: 33, category: "Al Plato", name: "Milanesa con Puré", price: 9500, description: "Milanesa acompañada de puré de papas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/logo.jpeg", stock: 10 },
-    { id: 34, category: "Al Plato", name: "Milanesa a Caballo", price: 10000, description: "Milanesa con huevos frito encima.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/logo.jpeg", stock: 10 },
-    { id: 35, category: "Al Plato", name: "Milanesa Napolitana", price: 10500, description: "Milanesa con salsa de tomate, jamón y queso.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/milanesa napolitana.jpeg", stock: 10 }
+    { id: 33, category: "Al Plato", name: "Milanesa con Puré", price: 10000, description: "Milanesa acompañada de puré de papas.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/logo.jpeg", stock: 1000 },
+    { id: 34, category: "Al Plato", name: "Milanesa a Caballo", price: 10500, description: "Milanesa con huevos frito encima.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/logo.jpeg", stock: 1000 },
+    { id: 35, category: "Al Plato", name: "Milanesa Napolitana", price: 11500, description: "Milanesa con salsa anego.", image: "https://raw.githubusercontent.com/NEXOar-art/Rotiseria-Todo-Casero/main/milanesa napolitana.jpeg", stock: 1000 }
   ];
 
   const defaultOffers = [
@@ -1096,7 +1151,6 @@
             <div class="product-description">${product.description}</div>
           </div>
           <div class="product-price">$${product.price.toLocaleString('es-AR')}</div>
-          <div class="product-stock">Stock: ${product.stock}</div>
           ${product.image ? `<img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">` : ""}
           <button class="add-to-cart" data-id="${product.id}" data-name="${product.name}" data-price="${product.price}">Añadir al Carrito</button>
         `;
@@ -1129,25 +1183,32 @@
   function addToCart(id, name, price) {
     const product = products.find(p => p.id === parseInt(id));
     if (product.stock <= 0) {
-      alert("Lo siento, este producto está agotado.");
+      alert("Lo siento, este producto no está disponible en este momento. Contáctanos por WhatsApp para más información.");
+      window.open("https://api.whatsapp.com/send?phone=+543489358998&text=Hola%20Todo%20Casero!!%20No%20pude%20agregar%20" + encodeURIComponent(name) + "%20al%20carrito.", '_blank');
       return;
     }
     const existingItem = cart.find(item => item.id === id);
     if (existingItem) {
       if (product.stock < existingItem.quantity + 1) {
-        alert("Lo siento, no hay suficiente stock para agregar más unidades de este producto.");
+        alert("Lo siento, no hay suficiente disponibilidad para agregar más unidades de este producto. Contáctanos por WhatsApp para más información.");
+        window.open("https://api.whatsapp.com/send?phone=+543489358998&text=Hola%20Todo%20Casero!!%20No%20pude%20agregar%20más%20" + encodeURIComponent(name) + "%20al%20carrito.", '_blank');
         return;
       }
       existingItem.quantity += 1;
     } else {
       if (product.stock < 1) {
-        alert("Lo siento, este producto está agotado.");
+        alert("Lo siento, este producto no está disponible en este momento. Contáctanos por WhatsApp para más información.");
+        window.open("https://api.whatsapp.com/send?phone=+543489358998&text=Hola%20Todo%20Casero!!%20No%20pude%20agregar%20" + encodeURIComponent(name) + "%20al%20carrito.", '_blank');
         return;
       }
       cart.push({ id, name, price, quantity: 1 });
     }
     updateCartDisplay();
     document.getElementById("cartModal").style.display = "flex";
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 
   function updateCartDisplay() {
@@ -1164,7 +1225,12 @@
       const div = document.createElement("div");
       div.className = "cart-item";
       div.innerHTML = `
-        <span>${item.quantity} x ${item.name}</span>
+        <span>${item.name}</span>
+        <div class="quantity-controls">
+          <button class="quantity-btn" onclick="changeQuantity('${item.id}', -1)">-</button>
+          <span class="quantity-display">${item.quantity}</span>
+          <button class="quantity-btn" onclick="changeQuantity('${item.id}', 1)">+</button>
+        </div>
         <span>$${itemTotal.toLocaleString('es-AR')}</span>
         <button onclick="removeFromCart('${item.id}')">Eliminar</button>
       `;
@@ -1175,16 +1241,28 @@
     cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
   }
 
-  function removeFromCart(id) {
-    const itemIndex = cart.findIndex(item => item.id === id);
-    if (itemIndex !== -1) {
-      if (cart[itemIndex].quantity > 1) {
-        cart[itemIndex].quantity -= 1;
-      } else {
-        cart.splice(itemIndex, 1);
+  function changeQuantity(id, change) {
+    const product = products.find(p => p.id === parseInt(id));
+    const item = cart.find(item => item.id === id);
+    if (item) {
+      const newQuantity = item.quantity + change;
+      if (newQuantity > product.stock) {
+        alert("Lo siento, no hay suficiente disponibilidad para agregar más unidades de este producto. Contáctanos por WhatsApp para más información.");
+        window.open("https://api.whatsapp.com/send?phone=+543489358998&text=Hola%20Todo%20Casero!!%20No%20pude%20agregar%20más%20" + encodeURIComponent(item.name) + "%20al%20carrito.", '_blank');
+        return;
       }
+      if (newQuantity < 1) {
+        removeFromCart(id);
+        return;
+      }
+      item.quantity = newQuantity;
       updateCartDisplay();
     }
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    updateCartDisplay();
   }
 
   function generatePDF() {
@@ -1225,7 +1303,7 @@
     doc.save(`order_${new Date().toISOString().replace(/[:.]/g, '')}.pdf`);
   }
 
-  function generateWhatsAppMessage(customerName, customerPhone, lowStockProducts) {
+  function generateWhatsAppMessage(customerName, customerPhone) {
     let message = `🍔 *Pedido de Todo Casero* 🍔\n\n`;
     message += `👤 *Cliente*: ${customerName}\n`;
     message += `📞 *Celular*: ${customerPhone}\n\n`;
@@ -1239,19 +1317,7 @@
     if (payment === "Transferencia") {
       message += `\nAlias: Adri.roti\nTitular: Adriana Basilia Enrique`;
     }
-    if (lowStockProducts.length > 0) {
-      message += `\n\n🔒 *Para la rotisería*: Usar código !0608 para ver alertas de stock bajo`;
-    }
-    return encodeURIComponent(message);
-  }
-
-  function generateStockMessage(lowStockProducts) {
-    let message = `🔒 *Alerta de Stock Bajo* 🔒\n\n`;
-    message += `Código: !0608\n`;
-    message += `¡Atención! El stock de los siguientes productos ha llegado a 2 unidades:\n`;
-    lowStockProducts.forEach(product => {
-      message += `- ${product}: Quedan solo 2 unidades.\n`;
-    });
+    message += `\n\n📌 *Nota*: Si tienes alguna consulta o problema con tu pedido, contáctanos por WhatsApp.`;
     return encodeURIComponent(message);
   }
 
@@ -1375,6 +1441,11 @@
             }
           });
           updateCartDisplay();
+          document.getElementById("cartModal").style.display = "flex";
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
         } else {
           response += "No pude identificar los productos en tu pedido. 😔 Por favor escribe los nombres como aparecen en el menú de Todo Casero (ejemplo, 'Sándwich de Bondiola', 'Muzzarella'). ¿Puedes intentarlo de nuevo?";
         }
@@ -1457,7 +1528,7 @@
       const div = document.createElement("div");
       div.className = "product-item";
       div.innerHTML = `
-        <span>${product.name} - $${product.price} - Stock: ${product.stock}</span>
+        <span>${product.name} - $${product.price}</span>
         <div>
           <button class="btn" onclick="editProduct(${product.id})">Editar</button>
           <button class="btn" style="background-color: #e74c3c;" onclick="deleteProduct(${product.id})">Eliminar</button>
@@ -1473,7 +1544,6 @@
     document.getElementById("categorySelect").value = product.category;
     document.getElementById("productName").value = product.name;
     document.getElementById("productPrice").value = product.price;
-    document.getElementById("productStock").value = product.stock;
     document.getElementById("productDescription").value = product.description;
     document.getElementById("productImageUrl").value = product.image || "";
     if (product.image) {
@@ -1519,25 +1589,15 @@
       return;
     }
 
-    let lowStockProducts = [];
     cart.forEach(item => {
       const product = products.find(p => p.id === parseInt(item.id));
       product.stock -= item.quantity;
-      if (product.stock === 2) {
-        lowStockProducts.push(product.name);
-      }
     });
 
     const phoneNumber = "+543489358998";
-    const whatsappMessage = generateWhatsAppMessage(customerName, customerPhone, lowStockProducts);
+    const whatsappMessage = generateWhatsAppMessage(customerName, customerPhone);
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${whatsappMessage}`;
     window.open(whatsappUrl, '_blank');
-
-    if (lowStockProducts.length > 0) {
-      const stockMessage = generateStockMessage(lowStockProducts);
-      const stockUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${stockMessage}`;
-      setTimeout(() => window.open(stockUrl, '_blank'), 500);
-    }
 
     generatePDF();
     cart = [];
@@ -1581,23 +1641,22 @@
 
     const name = document.getElementById("productName").value.trim();
     const price = parseInt(document.getElementById("productPrice").value);
-    const stock = parseInt(document.getElementById("productStock").value);
     const description = document.getElementById("productDescription").value.trim();
     const category = document.getElementById("categorySelect").value;
     const imageInput = document.getElementById("productImage");
     const imageUrl = document.getElementById("productImageUrl").value.trim();
     const image = imageUrl || (imageInput.files.length > 0 ? URL.createObjectURL(imageInput.files[0]) : "");
 
-    if (!name || isNaN(price) || isNaN(stock)) {
+    if (!name || isNaN(price)) {
       alert("Por favor completa todos los campos requeridos.");
       return;
     }
 
     if (editingProductId) {
-      products = products.map(p => p.id === editingProductId ? { ...p, category, name, price, stock, description, image } : p);
+      products = products.map(p => p.id === editingProductId ? { ...p, category, name, price, description, image } : p);
     } else {
       const id = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
-      products.push({ id, category, name, price, stock, description, image });
+      products.push({ id, category, name, price, description, image, stock: 10 }); // Default stock for new products
     }
 
     renderProductList();
@@ -1628,8 +1687,15 @@
         this.style.display = "none";
       }
     });
+
+    // JavaScript to ensure animation triggers on page load
+    const elements = document.querySelectorAll('.animate-text');
+    elements.forEach((el, index) => {
+      el.style.animationDelay = `${index * 0.2}s`;
+    });
   });
 </script>
 
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'970d6bdb2faa9ae2',t:'MTc1NTQ3ODI3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'970dc0e25deab03f',t:'MTc1NTQ4MTc1NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+"commit"
